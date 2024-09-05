@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% block content %}
+<!-- gallery.html -->
+<h1>Cat Gallery</h1>
+<form method="get" action="/gallery">
+	<label for="color">Color:</label>
+	<input type="text" id="color" name="color" />
+	<label for="eye_color">Eye Color:</label>
+	<input type="text" id="eye_color" name="eye_color" />
+	<label for="age">Age:</label>
+	<input type="text" id="age" name="age" />
+	<label for="gender">Gender:</label>
+	<input type="text" id="gender" name="gender" />
+	<button type="submit">Filter</button>
+</form>
+
+<div>
+	{% for cat in cats %}
+	<div>
+		<h2>{{ cat.name }}</h2>
+		<img
+			src="{{ url_for('static', filename='cat-images/' + cat.image) }}"
+			alt="{{ cat.name }}"
+		/>
+		<p>Color: {{ cat.color }}</p>
+		<p>Eye Color: {{ cat.eye_color }}</p>
+		<p>Age: {{ cat.age }}</p>
+		<p>Gender: {{ cat.gender }}</p>
+	</div>
+	{% endfor %}
+</div>
+
+{% endblock %}
