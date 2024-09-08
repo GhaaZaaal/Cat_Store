@@ -7,17 +7,11 @@
     border-color: #007bff;
 }
 
-.btn-secondary {
-    background-color: #6c757d;
-    border-color: #6c757d;
-}
-
-h1 {
-    margin-bottom: 2rem;
-    color: #343a40;
-}
-
 .container {
     max-width: 600px;
     margin-top: 3rem;
+}
+
+.alert {
+    margin-top: 1.5rem;
 }

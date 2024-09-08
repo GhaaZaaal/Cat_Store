@@ -20,11 +20,18 @@ def login():
             login_user(user, remember=True)
             return redirect(url_for("auth.homePage"))
         else:
-            flash("Login failed. Check your email and password.", category="error")
+            flash("Login failed. Please check your credentials.", category="error")
+            return render_template(
+                "login.html",
+                title="Cat Store - LogIn",
+                custom_Css="login",
+                show_register=True,
+            )
     return render_template(
         "login.html",
         title="Cat Store - LogIn",
         custom_Css="login",
+        show_register=False,
     )
 
 
@@ -75,40 +82,30 @@ def register():
     )
 
 
-def get_filtered_cats(color, eye_color, age, gender):
-    # Assuming you have a Cat model or cat data structure
-    query = Cat.query
-    if color:
-        query = query.filter_by(color=color)
-    if eye_color:
-        query = query.filter_by(eye_color=eye_color)
-    if age:
-        query = query.filter_by(age=age)
-    if gender:
-        query = query.filter_by(gender=gender)
-
-    return query.all()
-
-
 @auth.route("/home", methods=["GET", "POST"])
 @login_required
 def homePage():
     if request.method == "POST":
-        color = request.form.get("color")
-        eye_color = request.form.get("eye_color")
-        age = request.form.get("age")
-        gender = request.form.get("gender")
+        color = request.form.get("color").capitalize().strip()
+        eye_color = request.form.get("eye_color").capitalize().strip()
+        age = request.form.get("age").lower().strip()
+        gender = request.form.get("gender").capitalize().strip()
 
-        filtered_cats = get_filtered_cats(color, eye_color, age, gender)
-        return render_template(
-            "gallery.html",
-            title="Cat Store",
-            custom_Css="home",
-            cats=filtered_cats,
+        # filtered_cats = get_filtered_cats(color, eye_color, age, gender)
+        return redirect(
+            url_for(
+                "main.gallery", color=color, eye_color=eye_color, age=age, gender=gender
+            )
         )
+        # return render_template(
+        #     "gallery.html",
+        #     title="Cat Store",
+        #     custom_Css="home",
+        #     cats=filtered_cats,
+        # )
     return render_template(
         "home.html",
-        title="Cat Store",
+        title="Cat Store - Home",
         custom_Css="home",
     )
 
@@ -137,7 +134,8 @@ def profile():
 
     return render_template(
         "profile.html",
-        title="Profile",
+        title="Cat Store - Profile",
+        custom_Css="profile",
     )
 
 
@@ -147,3 +145,16 @@ def logout():
     logout_user()
     flash("You have been logged out.", category="success")
     return redirect(url_for("auth.login"))
+
+
+# def get_filtered_cats(color, eye_color, age, gender):
+#     query = Cat.query
+#     if color:
+#         query = query.filter_by(color=color)
+#     if eye_color:
+#         query = query.filter_by(eye_color=eye_color)
+#     if age:
+#         query = query.filter_by(age=age)
+#     if gender:
+#         query = query.filter_by(gender=gender)
+#     return query.all()

@@ -3,30 +3,56 @@
 <h1>Cat Gallery</h1>
 <form method="get" action="/gallery">
 	<label for="color">Color:</label>
-	<input type="text" id="color" name="color" />
+	<select name="color" id="color">
+		<option value="">Any</option>
+		<option value="White">White</option>
+		<option value="Black">Black</option>
+		<option value="Orange">Orange</option>
+		<option value="Grey">Grey</option>
+		<option value="Mix">Mix</option>
+	</select>
 	<label for="eye_color">Eye Color:</label>
-	<input type="text" id="eye_color" name="eye_color" />
+	<select name="eye_color" id="eye_color">
+		<option value="">Any</option>
+		<option value="Blue">Blue</option>
+		<option value="Green">Green</option>
+		<option value="Yellow">Yellow</option>
+		<option value="Grey">Grey</option>
+	</select>
+
 	<label for="age">Age:</label>
-	<input type="text" id="age" name="age" />
+	<select name="age" id="age">
+		<option value="">Any</option>
+		<option value="kitten">Kitten</option>
+		<option value="adult">Adult</option>
+		<option value="senior">Senior</option>
+	</select>
+
 	<label for="gender">Gender:</label>
-	<input type="text" id="gender" name="gender" />
+	<select name="gender" id="gender">
+		<option value="">Any</option>
+		<option value="Male">Male</option>
+		<option value="Female">Female</option>
+	</select>
 	<button type="submit">Filter</button>
 </form>
 
-<div>
-	{% for cat in cats %}
-	<div>
-		<h2>{{ cat.name }}</h2>
+{% for cat in cats %}
+<div class="cat-item">
+	<a href="{{ url_for('main.confirm_Reservation', cat_id=cat.id) }}">
 		<img
+			class="cat-image"
 			src="{{ url_for('static', filename='cat-images/' + cat.image) }}"
-			alt="{{ cat.name }}"
+			alt="Cat Image {{ loop.index }}"
+			loading="lazy"
 		/>
-		<p>Color: {{ cat.color }}</p>
-		<p>Eye Color: {{ cat.eye_color }}</p>
-		<p>Age: {{ cat.age }}</p>
-		<p>Gender: {{ cat.gender }}</p>
+	</a>
+	<div class="cat-info">
+		<h2 class="cat-name">{{ cat.name }}</h2>
+		<p><span>Color:</span> {{ cat.color }}</p>
+		<p><span>Eye Color:</span> {{ cat.eye_color }}</p>
+		<p><span>Age:</span> {{ cat.age }}</p>
+		<p><span>Gender:</span> {{ cat.gender }}</p>
 	</div>
-	{% endfor %}
 </div>
-
-{% endblock %}
+{% endfor %} {% endblock %}

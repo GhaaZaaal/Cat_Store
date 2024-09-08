@@ -1,0 +1,135 @@
+/* General Body Styling */
+body {
+	background-color: #f1f3f6;
+	font-family: "Roboto", sans-serif;
+	color: #333;
+	margin: 0;
+	padding: 0;
+}
+
+/* Page Header */
+h1 {
+	font-size: 2.5rem;
+	color: #2e8b57;
+	text-align: center;
+	margin: 40px 0;
+	font-weight: 700;
+}
+
+/* Filter Form Styling */
+form {
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 15px;
+	flex-wrap: wrap;
+	max-width: 900px;
+	margin: 0 auto 40px auto;
+}
+
+form label {
+	font-weight: 500;
+	color: #333;
+}
+
+form select {
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-family: "Roboto", sans-serif;
+	background-color: #fff;
+}
+
+form button {
+	background-color: #4a90e2;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	font-size: 16px;
+	cursor: pointer;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+form button:hover {
+	background-color: #357abd;
+}
+
+/* Cat Gallery Styling */
+.cat-gallery {
+	display: grid;
+	grid-template-columns: repeat(
+		auto-fit,
+		minmax(200px, 1fr)
+	); /* Responsive grid layout */
+	gap: 20px;
+	padding: 20px;
+	max-width: 1200px;
+	margin: auto;
+}
+
+/* Individual Cat Card */
+.cat-item {
+	background-color: #fff;
+	border-radius: 12px;
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cat-item:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Cat Image Styling */
+.cat-image {
+	width: 100%;
+	height: 150px;
+	object-fit: cover;
+}
+
+/* Cat Info Section */
+.cat-info {
+	padding: 15px;
+	text-align: left;
+}
+
+.cat-name {
+	font-size: 1.4rem;
+	font-weight: 700;
+	margin-bottom: 10px;
+	color: #333;
+}
+
+.cat-info p {
+	margin: 5px 0;
+	font-size: 1rem;
+	color: #666;
+}
+
+.cat-info p span {
+	font-weight: 600;
+	color: #333;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+	form {
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	form button {
+		width: 100%;
+	}
+
+	.cat-gallery {
+		grid-template-columns: 1fr;
+	}
+}

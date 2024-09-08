@@ -1,0 +1,17 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Confirm Reservation</h1>
+
+<div class="cat-reserved">
+	<img
+		src="{{ url_for('static', filename='cat-images/' + cat.image) }}"
+		alt="{{ cat.name }}"
+	/>
+	<p>Cat Name: {{ cat.name }}</p>
+	<p>Color: {{ cat.color }}</p>
+	<p>Eye Color: {{ cat.eye_color }}</p>
+	<p>Age: {{ cat.age }}</p>
+	<p>Gender: {{ cat.gender }}</p>
+	<p>Status: Reserved</p>
+</div>
+
+{% endblock %}
