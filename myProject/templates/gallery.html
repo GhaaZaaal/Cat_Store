@@ -1,7 +1,40 @@
 {% extends 'base.html' %} {% block content %}
+<!-- gallery.html -->
 <h1>Cat Gallery</h1>
 <form method="get" action="/gallery">
-	<!-- Filters for color, eye color, age, and gender as in your current code -->
+	<label for="color">Color:</label>
+	<select name="color" id="color">
+		<option value="">Any</option>
+		<option value="White">White</option>
+		<option value="Black">Black</option>
+		<option value="Orange">Orange</option>
+		<option value="Grey">Grey</option>
+		<option value="Mix">Mix</option>
+	</select>
+	<label for="eye_color">Eye Color:</label>
+	<select name="eye_color" id="eye_color">
+		<option value="">Any</option>
+		<option value="Blue">Blue</option>
+		<option value="Green">Green</option>
+		<option value="Yellow">Yellow</option>
+		<option value="Grey">Grey</option>
+	</select>
+
+	<label for="age">Age:</label>
+	<select name="age" id="age">
+		<option value="">Any</option>
+		<option value="kitten">Kitten</option>
+		<option value="adult">Adult</option>
+		<option value="senior">Senior</option>
+	</select>
+
+	<label for="gender">Gender:</label>
+	<select name="gender" id="gender">
+		<option value="">Any</option>
+		<option value="Male">Male</option>
+		<option value="Female">Female</option>
+	</select>
+	<button type="submit">Filter</button>
 </form>
 
 <div class="cat-gallery">
