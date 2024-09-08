@@ -24,11 +24,10 @@ form {
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 	display: flex;
 	justify-content: center;
-	align-items: center;
 	gap: 15px;
 	flex-wrap: wrap;
 	max-width: 900px;
-	margin: 0 auto 40px auto;
+	margin: 0 auto 40px;
 }
 
 form label {
@@ -40,7 +39,6 @@ form select {
 	padding: 10px;
 	border: 1px solid #ccc;
 	border-radius: 5px;
-	font-family: "Roboto", sans-serif;
 	background-color: #fff;
 }
 
@@ -63,10 +61,7 @@ form button:hover {
 /* Cat Gallery Styling */
 .cat-gallery {
 	display: grid;
-	grid-template-columns: repeat(
-		auto-fit,
-		minmax(200px, 1fr)
-	); /* Responsive grid layout */
+	grid-template-columns: repeat(3, 1fr); /* 3 columns per row */
 	gap: 20px;
 	padding: 20px;
 	max-width: 1200px;
@@ -90,7 +85,7 @@ form button:hover {
 /* Cat Image Styling */
 .cat-image {
 	width: 100%;
-	height: 150px;
+	height: 200px;
 	object-fit: cover;
 }
 
@@ -120,16 +115,16 @@ form button:hover {
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
-	form {
-		flex-direction: column;
-		gap: 10px;
-	}
-
-	form button {
-		width: 100%;
-	}
-
 	.cat-gallery {
-		grid-template-columns: 1fr;
+		grid-template-columns: 1fr; /* 1 column per row on small screens */
+	}
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+	.cat-gallery {
+		grid-template-columns: repeat(
+			2,
+			1fr
+		); /* 2 columns per row on medium screens */
 	}
 }
