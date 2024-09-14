@@ -1,7 +1,9 @@
+# logout.py ==> main
 from flask import flash, redirect, url_for
 from flask_login import login_required, logout_user
 
 from . import main
+
 
 @main.route("/logout")
 @login_required
