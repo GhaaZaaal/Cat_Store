@@ -1,0 +1,227 @@
+{% extends "base.html" %} {% block content %}
+<div class="register-section text-center">
+	<h2 class="display-4 font-weight-bold mb-4">Create Your Account</h2>
+	<p class="lead mb-5">Sign up with your details below</p>
+
+	<form method="POST" class="mx-auto" style="max-width: 600px">
+		<!-- Email -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Email Address <span>*</span></legend>
+			<input
+				type="email"
+				class="form-control"
+				id="email"
+				name="email"
+				placeholder="Enter email"
+				required
+			/>
+		</fieldset>
+
+		<!-- First Name -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">First Name <span>*</span></legend>
+			<input
+				type="text"
+				class="form-control"
+				id="firstName"
+				name="firstName"
+				placeholder="Enter first name"
+				required
+			/>
+		</fieldset>
+
+		<!-- Last Name -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Last Name <span>*</span></legend>
+			<input
+				type="text"
+				class="form-control"
+				id="lastName"
+				name="lastName"
+				placeholder="Enter last name"
+				required
+			/>
+		</fieldset>
+
+		<!-- Phone Number -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Phone Number <span>*</span></legend>
+			<input
+				type="text"
+				class="form-control"
+				id="phoneNumber"
+				name="phoneNumber"
+				placeholder="Enter phone number"
+				required
+			/>
+		</fieldset>
+
+		<!-- Password -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Password <span>*</span></legend>
+			<input
+				type="password"
+				class="form-control"
+				id="password1"
+				name="password1"
+				placeholder="Enter password"
+				required
+			/>
+		</fieldset>
+
+		<!-- Confirm Password -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">
+				Confirm Password <span>*</span>
+			</legend>
+			<input
+				type="password"
+				class="form-control"
+				id="password2"
+				name="password2"
+				placeholder="Confirm password"
+				required
+			/>
+		</fieldset>
+
+		<!-- Question One -->
+		<fieldset class="form-group box">
+			<legend for="question1" class="legend-label">
+				Security Question 1 <span>*</span>
+			</legend>
+			<select
+				class="form-control"
+				id="question1"
+				name="question1"
+				required
+				style="padding: 8px"
+			>
+				<option class="form-control" value="">Select a question</option>
+				<option
+					class="form-control"
+					value="What is the name of your first pet?"
+				>
+					What is the name of your first pet?
+				</option>
+				<option
+					class="form-control"
+					value="What is your mother's maiden name?"
+				>
+					What is your mother's maiden name?
+				</option>
+				<option
+					class="form-control"
+					value="What is the name of your first school?"
+				>
+					What is the name of your first school?
+				</option>
+				<option
+					class="form-control"
+					value="In what city were you born?"
+				>
+					In what city were you born?
+				</option>
+			</select>
+			<br />
+			<input
+				type="text"
+				class="form-control"
+				id="question1_answer"
+				name="question1_answer"
+				placeholder="Enter your answer"
+				required
+			/>
+		</fieldset>
+
+		<!-- Question Two -->
+		<fieldset class="form-group box">
+			<legend for="question2" class="legend-label">
+				Security Question 2 <span>*</span>
+			</legend>
+			<select
+				class="form-control"
+				id="question2"
+				name="question2"
+				required
+				style="padding: 8px"
+			>
+				<option value="">Select a question</option>
+				<option value="What is the name of your childhood best friend?">
+					What is the name of your childhood best friend?
+				</option>
+				<option value="What was your first job?">
+					What was your first job?
+				</option>
+				<option value="Who was your favorite teacher in school?">
+					Who was your favorite teacher in school?
+				</option>
+				<option value="What is the name of the street you grew up on?">
+					What is the name of the street you grew up on?
+				</option>
+			</select>
+			<br />
+			<input
+				type="text"
+				class="form-control"
+				id="question2_answer"
+				name="question2_answer"
+				placeholder="Enter your answer"
+				required
+			/>
+		</fieldset>
+
+		<!-- Submit Button -->
+		<button type="submit" class="btn btn-primary btn-block mt-4">
+			Sign Up
+		</button>
+	</form>
+</div>
+
+<!-- Custom CSS for improved box layout -->
+<style>
+	.register-section {
+		margin-top: 30px;
+	}
+
+	.box {
+		border: 2px solid #ccc;
+		padding: 20px;
+		position: relative;
+		margin-bottom: 30px;
+		border-radius: 8px;
+	}
+
+	.legend-label {
+		font-size: 1.2rem;
+		font-weight: bold;
+		color: #007bff;
+		position: absolute;
+		top: -15px;
+		left: 15px;
+		background-color: white;
+		padding: 0 10px;
+	}
+
+	.form-control {
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1rem;
+	}
+
+	.btn-primary {
+		background-color: #007bff;
+		border-color: #007bff;
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1.2rem;
+	}
+
+	.btn-primary:hover {
+		background-color: #0056b3;
+		border-color: #004085;
+	}
+	span {
+		color: red;
+	}
+</style>
+{% endblock %}

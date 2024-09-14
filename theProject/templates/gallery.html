@@ -1,0 +1,189 @@
+{% extends 'base.html' %} {% block content %}
+<div class="gallery-container">
+	<h1 class="display-4 font-weight-bold mb-4 text-center">Cat Gallery</h1>
+
+	<!-- Filter Form -->
+	<form method="get" action="/gallery" class="filter-form">
+		<!-- Color Filter -->
+		<div class="form-group filter-box">
+			<label for="color" class="font-weight-bold">Color</label>
+			<select name="color" id="color" class="form-control">
+				<option value="">Any</option>
+				<option value="White">White</option>
+				<option value="Black">Black</option>
+				<option value="Orange">Orange</option>
+				<option value="Grey">Grey</option>
+				<option value="Mix">Mix</option>
+			</select>
+		</div>
+
+		<!-- Eye Color Filter -->
+		<div class="form-group filter-box">
+			<label for="eye_color" class="font-weight-bold">Eye Color</label>
+			<select name="eye_color" id="eye_color" class="form-control">
+				<option value="">Any</option>
+				<option value="Blue">Blue</option>
+				<option value="Green">Green</option>
+				<option value="Yellow">Yellow</option>
+				<option value="Grey">Grey</option>
+			</select>
+		</div>
+
+		<!-- Age Filter -->
+		<div class="form-group filter-box">
+			<label for="age" class="font-weight-bold">Age</label>
+			<select name="age" id="age" class="form-control">
+				<option value="">Any</option>
+				<option value="kitten">Kitten</option>
+				<option value="adult">Adult</option>
+				<option value="senior">Senior</option>
+			</select>
+		</div>
+
+		<!-- Gender Filter -->
+		<div class="form-group filter-box">
+			<label for="gender" class="font-weight-bold">Gender</label>
+			<select name="gender" id="gender" class="form-control">
+				<option value="">Any</option>
+				<option value="Male">Male</option>
+				<option value="Female">Female</option>
+			</select>
+		</div>
+
+		<!-- Filter Button -->
+		<button type="submit" class="btn btn-primary btn-block mt-3">
+			Filter
+		</button>
+	</form>
+
+	<!-- Cat Gallery -->
+	<div class="cat-gallery mt-4">
+		{% for cat in cats %}
+		<div class="cat-item">
+			<a href="{{ url_for('auth.confirm_Reservation', cat_id=cat.id) }}">
+				<img
+					class="cat-image"
+					src="{{ url_for('static', filename='cat-images/' + cat.image) }}"
+					alt="Cat Image {{ loop.index }}"
+					loading="lazy"
+				/>
+			</a>
+			<div class="cat-info">
+				<h2 class="cat-name">{{ cat.name }}</h2>
+				<p><span class="info-label">Color:</span> {{ cat.color }}</p>
+				<p>
+					<span class="info-label">Eye Color:</span> {{ cat.eye_color
+					}}
+				</p>
+				<p><span class="info-label">Age:</span> {{ cat.age }}</p>
+				<p><span class="info-label">Gender:</span> {{ cat.gender }}</p>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}
+
+<!-- Custom CSS for gallery styling -->
+<style>
+	.gallery-container {
+		padding: 20px;
+	}
+
+	.filter-form {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: 20px;
+		margin-bottom: 40px;
+	}
+
+	.form-group {
+		margin-bottom: 0;
+	}
+
+	.filter-box {
+		border: 2px solid #e0e0e0;
+		padding: 15px;
+		border-radius: 8px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		transition: border-color 0.3s;
+	}
+
+	.filter-box:hover {
+		border-color: #007bff;
+	}
+
+	.font-weight-bold {
+		font-weight: 700;
+	}
+
+	.form-control {
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1rem;
+		border: 1px solid #ccc;
+		transition: border-color 0.3s;
+	}
+
+	.form-control:focus {
+		border-color: #007bff;
+		box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+	}
+
+	.cat-gallery {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 20px;
+	}
+
+	.cat-item {
+		border: 2px solid #e0e0e0;
+		padding: 15px;
+		border-radius: 8px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		transition: border-color 0.3s, transform 0.3s;
+	}
+
+	.cat-item:hover {
+		border-color: #007bff;
+		transform: scale(1.02);
+	}
+
+	.cat-image {
+		width: 100%;
+		height: auto;
+		border-radius: 8px;
+		transition: opacity 0.3s;
+	}
+
+	.cat-item:hover .cat-image {
+		opacity: 0.9;
+	}
+
+	.cat-info {
+		margin-top: 10px;
+	}
+
+	.cat-name {
+		font-size: 1.5rem;
+		font-weight: 700;
+		margin-bottom: 10px;
+	}
+
+	.info-label {
+		font-weight: 700;
+		color: #333;
+	}
+
+	.btn-primary {
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1.2rem;
+		transition: background-color 0.3s, border-color 0.3s;
+	}
+
+	.btn-primary:hover {
+		background-color: #0056b3;
+		border-color: #004085;
+	}
+</style>

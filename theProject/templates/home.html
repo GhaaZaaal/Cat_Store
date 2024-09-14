@@ -1,0 +1,282 @@
+{% extends 'base.html' %} {% block content %}
+<div class="home-section text-center">
+	<h2 class="display-4 font-weight-bold mb-4">Customize Your Perfect Cat</h2>
+	<p class="lead mb-5">
+		Choose your preferences below to find the perfect cat match for you!
+	</p>
+
+	<form method="POST" class="mx-auto" style="max-width: 600px">
+		<!-- Cat Color -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Favorite Cat Color</legend>
+			<div class="btn-group-toggle" data-toggle="buttons">
+				<label class="btn btn-outline-primary">
+					<input
+						id="any"
+						type="radio"
+						name="color"
+						value=""
+						autocomplete="off"
+						checked
+					/>
+					Any
+				</label>
+				<label class="btn btn-outline-primary">
+					<input
+						id="white"
+						type="radio"
+						name="color"
+						value="White"
+						autocomplete="off"
+					/>
+					White
+				</label>
+				<label class="btn btn-outline-primary">
+					<input
+						id="black"
+						type="radio"
+						name="color"
+						value="Black"
+						autocomplete="off"
+					/>
+					Black
+				</label>
+				<label class="btn btn-outline-primary">
+					<input
+						id="orange"
+						type="radio"
+						name="color"
+						value="Orange"
+						autocomplete="off"
+					/>
+					Orange
+				</label>
+				<label class="btn btn-outline-primary">
+					<input
+						id="grey"
+						type="radio"
+						name="color"
+						value="Grey"
+						autocomplete="off"
+					/>
+					Grey
+				</label>
+				<label class="btn btn-outline-primary">
+					<input
+						id="mix"
+						type="radio"
+						name="color"
+						value="Mix"
+						autocomplete="off"
+					/>
+					Mix
+				</label>
+			</div>
+		</fieldset>
+
+		<!-- Eye Color -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Preferred Eye Color</legend>
+			<div class="btn-group-toggle" data-toggle="buttons">
+				<label class="btn btn-outline-info">
+					<input
+						id="any"
+						type="radio"
+						name="eye_color"
+						value=""
+						autocomplete="off"
+						checked
+					/>
+					Any
+				</label>
+				<label class="btn btn-outline-info">
+					<input
+						id="blue"
+						type="radio"
+						name="eye_color"
+						value="Blue"
+						autocomplete="off"
+					/>
+					Blue
+				</label>
+				<label class="btn btn-outline-info">
+					<input
+						id="green"
+						type="radio"
+						name="eye_color"
+						value="Green"
+						autocomplete="off"
+					/>
+					Green
+				</label>
+				<label class="btn btn-outline-info">
+					<input
+						id="yellow"
+						type="radio"
+						name="eye_color"
+						value="Yellow"
+						autocomplete="off"
+					/>
+					Yellow
+				</label>
+				<label class="btn btn-outline-info">
+					<input
+						id="grey"
+						type="radio"
+						name="eye_color"
+						value="Grey"
+						autocomplete="off"
+					/>
+					Grey
+				</label>
+			</div>
+		</fieldset>
+
+		<!-- Cat Age -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Desired Cat Age</legend>
+			<div class="btn-group-toggle" data-toggle="buttons">
+				<label class="btn btn-outline-success">
+					<input
+						id="any"
+						type="radio"
+						name="age"
+						value=""
+						autocomplete="off"
+						checked
+					/>
+					Any
+				</label>
+				<label class="btn btn-outline-success">
+					<input
+						id="kitten"
+						type="radio"
+						name="age"
+						value="kitten"
+						autocomplete="off"
+					/>
+					Kitten
+				</label>
+				<label class="btn btn-outline-success">
+					<input
+						id="adult"
+						type="radio"
+						name="age"
+						value="adult"
+						autocomplete="off"
+					/>
+					Adult
+				</label>
+				<label class="btn btn-outline-success">
+					<input
+						id="senior"
+						type="radio"
+						name="age"
+						value="senior"
+						autocomplete="off"
+					/>
+					Senior
+				</label>
+			</div>
+		</fieldset>
+
+		<!-- Gender -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Preferred Cat Gender</legend>
+			<div class="btn-group-toggle" data-toggle="buttons">
+				<label class="btn btn-outline-warning">
+					<input
+						id="any"
+						type="radio"
+						name="gender"
+						value=""
+						autocomplete="off"
+						checked
+					/>
+					Any
+				</label>
+				<label class="btn btn-outline-warning">
+					<input
+						id="male"
+						type="radio"
+						name="gender"
+						value="Male"
+						autocomplete="off"
+					/>
+					Male
+				</label>
+				<label class="btn btn-outline-warning">
+					<input
+						id="female"
+						type="radio"
+						name="gender"
+						value="Female"
+						autocomplete="off"
+					/>
+					Female
+				</label>
+			</div>
+		</fieldset>
+
+		<!-- Submit Button -->
+		<button type="submit" class="btn btn-primary btn-block mt-4">
+			Submit
+		</button>
+	</form>
+</div>
+
+<!-- Custom CSS for box layout -->
+<style>
+	.box {
+		border: 2px solid #ccc;
+		padding: 20px;
+		position: relative;
+		margin-bottom: 30px;
+		border-radius: 8px;
+	}
+	.legend-label {
+		font-size: 1.2rem;
+		font-weight: bold;
+		color: #007bff;
+		position: absolute;
+		top: -15px;
+		left: 15px;
+		background-color: white;
+		padding: 0 10px;
+	}
+	.btn-group-toggle {
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+	}
+	.btn-group-toggle .btn {
+		flex: 1;
+		margin-right: 5px;
+	}
+	.btn-group-toggle .btn input[type="radio"] {
+		position: absolute;
+		opacity: 0;
+	}
+	.btn-group-toggle .btn.active {
+		background-color: #007bff;
+		color: white;
+	}
+	.btn-group-toggle .btn-outline-primary.active {
+		background-color: #007bff;
+		color: white;
+	}
+	.btn-group-toggle .btn-outline-info.active {
+		background-color: #17a2b8;
+		color: white;
+	}
+	.btn-group-toggle .btn-outline-success.active {
+		background-color: #28a745;
+		color: white;
+	}
+	.btn-group-toggle .btn-outline-warning.active {
+		background-color: #ffc107;
+		color: white;
+	}
+</style>
+
+{% endblock %}

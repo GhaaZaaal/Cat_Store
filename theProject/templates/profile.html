@@ -1,0 +1,150 @@
+{% extends "base.html" %} {% block content %}
+<div class="profile-section text-center">
+	<h2 class="display-4 font-weight-bold mb-4">Your Profile</h2>
+
+	<form
+		method="POST"
+		id="profileForm"
+		class="mx-auto"
+		style="max-width: 600px"
+	>
+		<!-- Email -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Email Address</legend>
+			<input
+				type="email"
+				class="form-control"
+				id="email"
+				name="email"
+				value="{{ current_user.email }}"
+				readonly
+			/>
+		</fieldset>
+
+		<!-- First Name -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">First Name</legend>
+			<input
+				type="text"
+				class="form-control"
+				id="firstName"
+				name="firstName"
+				value="{{ current_user.first_name }}"
+				readonly
+			/>
+		</fieldset>
+
+		<!-- Last Name -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Last Name</legend>
+			<input
+				type="text"
+				class="form-control"
+				id="lastName"
+				name="lastName"
+				value="{{ current_user.last_name }}"
+				readonly
+			/>
+		</fieldset>
+
+		<!-- Phone Number -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Phone Number</legend>
+			<input
+				type="text"
+				class="form-control"
+				id="phoneNumber"
+				name="phoneNumber"
+				value="{{ current_user.phone_number }}"
+				readonly
+			/>
+		</fieldset>
+
+		<!-- Buttons -->
+		<div class="button-group mt-4">
+			<button
+				type="button"
+				class="btn btn-primary"
+				id="editButton"
+				onclick="enableEdit()"
+			>
+				Edit
+			</button>
+			<button
+				type="submit"
+				class="btn btn-success d-none"
+				id="saveButton"
+			>
+				Save
+			</button>
+		</div>
+	</form>
+</div>
+
+<!-- JavaScript to enable form editing -->
+<script>
+	function enableEdit() {
+		document.getElementById("email").readOnly = false;
+		document.getElementById("firstName").readOnly = false;
+		document.getElementById("lastName").readOnly = false;
+		document.getElementById("phoneNumber").readOnly = false;
+		document.getElementById("editButton").classList.add("d-none");
+		document.getElementById("saveButton").classList.remove("d-none");
+	}
+</script>
+
+<!-- Custom CSS -->
+<style>
+	.profile-section {
+		margin-top: 30px;
+	}
+
+	.box {
+		border: 2px solid #ccc;
+		padding: 20px;
+		position: relative;
+		margin-bottom: 30px;
+		border-radius: 8px;
+	}
+
+	.legend-label {
+		font-size: 1.2rem;
+		font-weight: bold;
+		color: #007bff;
+		position: absolute;
+		top: -15px;
+		left: 15px;
+		background-color: white;
+		padding: 0 10px;
+	}
+
+	.form-control {
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1rem;
+	}
+
+	.button-group {
+		display: flex;
+		justify-content: center;
+		gap: 20px;
+	}
+
+	.btn-primary,
+	.btn-success {
+		padding: 12px 24px;
+		font-size: 1.2rem;
+		border-radius: 8px;
+	}
+
+	.btn-primary:hover {
+		background-color: #0056b3;
+		border-color: #004085;
+	}
+
+	.btn-success:hover {
+		background-color: #28a745;
+		border-color: #218838;
+	}
+</style>
+{% endblock %}  

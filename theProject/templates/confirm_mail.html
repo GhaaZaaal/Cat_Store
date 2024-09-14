@@ -1,0 +1,104 @@
+{% extends "base.html" %} {% block content %}
+<div class="profile-section text-center">
+	<h2 class="display-4 font-weight-bold mb-4">Your Profile</h2>
+
+	<form
+		method="POST"
+		id="profileForm"
+		class="mx-auto"
+		style="max-width: 600px"
+	>
+		<!-- Email -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Email Address</legend>
+			<input
+				type="email"
+				class="form-control"
+				id="email"
+				name="email"
+				value="{{ user.email }}"
+				readonly
+			/>
+		</fieldset>
+
+		<!-- Question One  -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">{{ user.question1 }}</legend>
+			<input
+				type="text"
+				class="form-control"
+				id="question1_answer"
+				name="question1_answer"
+				placeholder="Enter your answer"
+				required
+			/>
+		</fieldset>
+
+		<!-- Question Two  -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">{{ user.question2 }}</legend>
+			<input
+				type="text"
+				class="form-control"
+				id="question2_answer"
+				name="question2_answer"
+				placeholder="Enter your answer"
+				required
+			/>
+		</fieldset>
+
+		<!-- Submit Button -->
+		<button type="submit" class="btn btn-primary btn-block mt-4">
+			Reset
+		</button>
+	</form>
+</div>
+
+<!-- Custom CSS -->
+<style>
+	.register-section {
+		margin-top: 30px;
+	}
+
+	.box {
+		border: 2px solid #ccc;
+		padding: 20px;
+		position: relative;
+		margin-bottom: 30px;
+		border-radius: 8px;
+    }
+
+	.legend-label {
+		font-size: 1.2rem;
+		font-weight: bold;
+		color: #007bff;
+		position: relative;
+		top: -15px;
+		left: 15px;
+		background-color: white;
+		padding: 0 10px;
+	}
+
+	.form-control {
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1rem;
+	}
+
+	.btn-primary {
+		background-color: #007bff;
+		border-color: #007bff;
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1.2rem;
+	}
+
+	.btn-primary:hover {
+		background-color: #0056b3;
+		border-color: #004085;
+	}
+	span {
+		color: red;
+	}
+</style>
+{% endblock %}

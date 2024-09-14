@@ -1,0 +1,142 @@
+{% extends 'base.html' %} {% block content %}
+<div class="login-section text-center">
+	<h1 class="display-4 font-weight-bold mb-4">Welcome Back!</h1>
+	<p class="lead mb-4">
+		Log in to access your account and explore our latest cats looking for a
+		loving home.
+	</p>
+
+	<!-- Login Form -->
+	<form method="POST" class="mx-auto" style="max-width: 400px" id="loginForm">
+		<!-- Email Field -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Email Address</legend>
+			<input
+				type="email"
+				class="form-control"
+				id="email"
+				name="email"
+				placeholder="Enter your email"
+				required
+			/>
+		</fieldset>
+
+		<!-- Password Field -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Password</legend>
+			<input
+				type="password"
+				class="form-control"
+				id="password"
+				name="password"
+				placeholder="Enter your password"
+				required
+			/>
+		</fieldset>
+
+		<!-- Log In Button -->
+		<button type="submit" class="btn btn-primary btn-block mt-4">
+			Log In
+		</button>
+
+		<!-- Divider -->
+		<hr class="my-4" />
+
+		<!-- Register Link -->
+		<a href="{{ url_for('auth.register') }}">
+			<p class="text-muted">Don't have an account yet?</p>
+		</a>
+
+		<a href="{{ url_for('auth.password_reset') }}">
+			<p class="text-muted">Forget Your Password?</p>
+		</a>
+
+		<!-- Register Button (hidden initially) -->
+		<button
+			id="registerBtn"
+			style="display: none"
+			class="btn btn-secondary btn-block"
+		>
+			<a href="{{ url_for('auth.register') }}" class="text-white"
+				>Register Now</a
+			>
+		</button>
+	</form>
+</div>
+
+<!-- Script to handle register button on error -->
+<script>
+	// Get the show_register value from the backend (server-side errors)
+	const showRegister = {{ show_register | tojson }};
+	if (showRegister) {
+	    document.getElementById("registerBtn").style.display = "block";
+	}
+
+	// Client-side validation
+	const loginForm = document.getElementById('loginForm');
+	loginForm.addEventListener('submit', function (event) {
+	    // Check if the form is valid
+	    if (!loginForm.checkValidity()) {
+	        // If invalid, prevent submission and show Register button
+	        event.preventDefault();
+	        event.stopPropagation();
+	        document.getElementById("registerBtn").style.display = "block";
+	    }
+
+	    // Add Bootstrap validation class to trigger feedback
+	    loginForm.classList.add('was-validated');
+	}, false);
+</script>
+
+<!-- Custom CSS for form styling -->
+<style>
+	.login-section {
+		margin-top: 50px;
+	}
+
+	.box {
+		border: 2px solid #ccc;
+		padding: 20px;
+		position: relative;
+		margin-bottom: 30px;
+		border-radius: 8px;
+	}
+
+	.legend-label {
+		font-size: 1.2rem;
+		font-weight: bold;
+		color: #007bff;
+		position: absolute;
+		top: -15px;
+		left: 15px;
+		background-color: white;
+		padding: 0 10px;
+	}
+
+	.form-control {
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1rem;
+	}
+
+	.btn-block {
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1.2rem;
+	}
+
+	.btn-primary:hover {
+		background-color: #0056b3;
+		border-color: #004085;
+	}
+
+	.btn-secondary:hover {
+		background-color: #6c757d;
+		border-color: #5a6268;
+	}
+
+	hr {
+		border-color: #ddd;
+	}
+</style>
+{% endblock %}

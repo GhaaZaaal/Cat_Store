@@ -1,0 +1,89 @@
+{% extends 'base.html' %} {% block content %}
+<h1 class="text-center mb-4">Confirm Reservation</h1>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 text-center">
+			<img
+				src="{{ url_for('static', filename='cat-images/' + cat.image) }}"
+				alt="{{ cat.name }}"
+				class="img-fluid cat-image"
+			/>
+		</div>
+		<div class="col-md-6">
+			<div class="cat-details">
+				<p><strong>Cat Name:</strong> {{ cat.name }}</p>
+				<p><strong>Color:</strong> {{ cat.color }}</p>
+				<p><strong>Eye Color:</strong> {{ cat.eye_color }}</p>
+				<p><strong>Age:</strong> {{ cat.age }}</p>
+				<p><strong>Gender:</strong> {{ cat.gender }}</p>
+				<p>
+					<strong>Price:</strong>
+					<span class="price">${{ cat.price }}</span>
+				</p>
+				<p><strong>Status:</strong> Reserved</p>
+			</div>
+			<div class="confirmation-message mt-4">
+				{% with messages = get_flashed_messages(with_categories=True) %}
+				{% if messages %}
+				<div class="alert alert-success" role="alert">
+					{% for category, message in messages %} {{ message }} {%
+					endfor %}
+				</div>
+				{% endif %} {% endwith %}
+
+				<form
+					action="{{ url_for('auth.confirm_Reservation', cat_id=cat.id) }}"
+					method="POST"
+				>
+					{% if button_disabled %}
+					<button
+						type="button"
+						class="btn btn-success"
+						id="confirmButton"
+						disabled
+					>
+						Confirmed
+					</button>
+					{% else %}
+					<button
+						type="submit"
+						class="btn btn-success"
+						id="confirmButton"
+					>
+						Confirm
+					</button>
+					{% endif %}
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.cat-image {
+		max-width: 100%;
+		height: auto;
+		border-radius: 8px;
+	}
+
+	.price {
+		font-size: 1.5rem;
+		color: #28a745;
+		font-weight: bold;
+	}
+
+	.cat-details p {
+		font-size: 1.2rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.confirmation-message {
+		margin-top: 20px;
+	}
+
+	#confirmButton {
+		width: 100%;
+	}
+</style>
+{% endblock %}
