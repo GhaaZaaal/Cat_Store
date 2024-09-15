@@ -17,3 +17,4 @@ class User(UserMixin, db.Model):
     question1_answer = db.Column(db.String(150), nullable=False)
     question2 = db.Column(db.String(150), nullable=False)
     question2_answer = db.Column(db.String(150), nullable=False)
+    reserved_cat = db.Column(db.Integer, nullable=True)
