@@ -1,3 +1,4 @@
+# __init__.py ==> auth
 from flask import Blueprint
 
 # Create a Blueprint for authentication routes

@@ -1,17 +1,20 @@
-from flask import request, redirect, url_for, flash, render_template
+# set_new_password.py ==> auth
+from flask import flash, redirect, render_template, request, url_for
 from werkzeug.security import generate_password_hash
-from . import auth
-from ..models import User
-from .. import db
 
-@auth.route('/password_reset/confirm_mail/<int:user_id>', methods=["GET", "POST"])
+from .. import db
+from ..models import User
+from . import auth
+
+
+@auth.route("/password_reset/confirm_mail/<int:user_id>", methods=["GET", "POST"])
 def set_new_password(user_id):
     user = User.query.get_or_404(user_id)
-    
+
     if request.method == "POST":
         password1 = request.form.get("password1")
         password2 = request.form.get("password2")
-        
+
         if not password1 or not password2:
             flash("All fields are required.", category="error")
         elif password1 != password2:
@@ -29,5 +32,5 @@ def set_new_password(user_id):
         "set_new_password.html",
         title="Cat Store - Reset Password - Confirm Mail",
         custom_Css="confirm_mail",
-        user=user
+        user=user,
     )
