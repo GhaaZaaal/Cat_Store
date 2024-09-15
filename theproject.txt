@@ -1,0 +1,2390 @@
+.:
+cat-data.py
+instance
+run.py
+theProject
+theprojcet.txt
+
+./instance:
+database.db
+
+./theProject:
+__init__.py
+__pycache__
+auth
+main
+models
+static
+templates
+
+./theProject/__pycache__:
+__init__.cpython-38.pyc
+
+./theProject/auth:
+__init__.py
+__pycache__
+confirm_Reservation.py
+confirm_mail.py
+gallery.py
+homePage.py
+login.py
+password_reset.py
+profile.py
+register.py
+set_new_password.py
+
+./theProject/auth/__pycache__:
+__init__.cpython-38.pyc
+confirm_Reservation.cpython-38.pyc
+confirm_mail.cpython-38.pyc
+gallery.cpython-38.pyc
+homePage.cpython-38.pyc
+login.cpython-38.pyc
+password_reset.cpython-38.pyc
+profile.cpython-38.pyc
+register.cpython-38.pyc
+set_new_password.cpython-38.pyc
+
+./theProject/main:
+__init__.py
+__pycache__
+logout.py
+welcome.py
+
+./theProject/main/__pycache__:
+__init__.cpython-38.pyc
+logout.cpython-38.pyc
+welcome.cpython-38.pyc
+
+./theProject/models:
+__init__.py
+__pycache__
+cat.py
+user.py
+
+./theProject/models/__pycache__:
+__init__.cpython-38.pyc
+cat.cpython-38.pyc
+user.cpython-38.pyc
+
+./theProject/static:
+cat-images
+css
+
+./theProject/static/cat-images:
+1.jpg
+10.jpg
+11.jpg
+12.jpg
+13.jpg
+14.jpg
+15.jpg
+16.jpg
+17.jpg
+18.jpg
+19.jpg
+2.jpg
+20.jpg
+21.jpg
+22.jpg
+23.jpg
+25.jpg
+26.jpg
+27.jpg
+28.jpg
+29.jpg
+3.jpg
+30.jpg
+31.jpg
+32.jpg
+33.jpg
+34.jpg
+35.jpg
+5.jpg
+6.jpg
+7.jpg
+8.jpg
+9.jpg
+
+./theProject/static/css:
+styles.css
+
+./theProject/templates:
+base.html
+confirm_mail.html
+confirm_reservation.html
+gallery.html
+home.html
+login.html
+password_reset.html
+profile.html
+register.html
+set_new_password.html
+welcome.html
+
+Contents of ./cat-data.py:
+#!/usr/bin/python3
+
+import sqlite3
+
+from theProject import db
+from theProject.models import Cat
+
+def add_cat(name, color, eye_color, age, gender, price, image_path):
+    # Create a connection to the existing database
+    connection = sqlite3.connect("instance/database.db")
+    cursor = connection.cursor()
+
+    # Insert a new record into the cats table
+    cursor.execute(
+        """
+        INSERT INTO cats (name, color, eye_color, age, gender, price, image)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    """,
+        (name, color, eye_color, age, gender, price, image_path),
+    )
+
+    # Commit changes and close the connection
+    connection.commit()
+    connection.close()
+
+if __name__ == "__main__":
+    # Example data to add to the database
+    cats_data = [
+        ("Snowball", "Orange", "Green", "adult", "Female", "150", "1.jpg"),
+        ("Bella", "White", "Blue", "kitten", "Female", "200", "2.jpg"),
+        ("Ola", "White", "Blue", "adult", "Female", "170", "3.jpg"),
+        ("Lune", "Grey", "Blue", "adult", "Male", "180", "5.jpg"),
+        ("Simba", "Mix", "Green", "adult", "Male", "160", "6.jpg"),
+        ("Daisy", "Grey", "Yellow", "senior", "Female", "140", "7.jpg"),
+        ("Charlie", "Mix", "Green", "senior", "Male", "130", "8.jpg"),
+        ("Chloe", "Grey", "Yellow", "kitten", "Female", "210", "9.jpg"),
+        ("Max", "Black", "Green", "adult", "Male", "170", "10.jpg"),
+        ("Lucy", "Grey", "Yellow", "adult", "Male", "175", "11.jpg"),
+        ("Leo", "Black", "Green", "senior", "Male", "120", "12.jpg"),
+        ("Mia", "Mix", "Green", "adult", "Female", "160", "13.jpg"),
+        ("Jasper", "Mix", "Green", "senior", "Male", "135", "14.jpg"),
+        ("Willow", "White", "Yellow", "adult", "Male", "180", "15.jpg"),
+        ("Milo", "Mix", "Yellow", "senior", "Female", "125", "16.jpg"),
+        ("Sophie", "Brown", "Green", "adult", "Male", "165", "17.jpg"),
+        ("Tiger", "Grey", "Green", "adult", "Male", "170", "18.jpg"),
+        ("Zoe", "Brown", "Blue", "kitten", "Female", "220", "19.jpg"),
+        ("Cleo", "Orange", "Blue", "senior", "Male", "110", "20.jpg"),
+        ("Felix", "Brown", "Green", "senior", "Female", "130", "21.jpg"),
+        ("Lily", "Mix", "Grey", "kitten", "Female", "200", "22.jpg"),
+        ("Oscar", "Grey", "Yellow", "adult", "Male", "180", "23.jpg"),
+        ("Zalta", "Orange", "Green", "adult", "Female", "170", "25.jpg"),
+        ("Sammy", "Black", "Yellow", "adult", "Female", "160", "26.jpg"),
+        ("Felix", "Orange", "Green", "senior", "Male", "120", "27.jpg"),
+        ("Ginger", "White", "Grey", "senior", "Female", "130", "28.jpg"),
+        ("Trumb", "Mix", "Green", "adult", "Male", "175", "29.jpg"),
+        ("Pepper", "Grey", "Grey", "kitten", "Female", "190", "30.jpg"),
+        ("Gizmo", "White", "Yellow", "senior", "Male", "110", "31.jpg"),
+        ("Peanut", "Mix", "Yellow", "senior", "Female", "130", "32.jpg"),
+        ("Obama", "White", "Blue", "adult", "Male", "180", "33.jpg"),
+        ("Shadow", "Orange", "Yellow", "kitten", "Male", "210", "34.jpg"),
+        ("Oliver", "White", "Blue", "adult", "Male", "180", "35.jpg"),
+    ]
+
+    # Add each cat to the database
+    for cat in cats_data:
+        add_cat(*cat)
+
+    print("Cat data added successfully.")
+
+-----------------------------------
+
+Contents of ./run.py:
+#!/usr/bin/python3
+from theProject import create_app
+
+app = create_app()
+
+if __name__ == "__main__":
+    app.run(debug=True, port=2000)
+
+-----------------------------------
+
+Contents of ./theProject/auth/confirm_mail.py:
+from flask import  request, redirect, url_for, flash, render_template
+from werkzeug.security import check_password_hash
+from . import auth
+from ..models import User
+
+@auth.route('/password_reset/<int:user_id>', methods=["GET", "POST"])
+def confirm_mail(user_id):
+    user = User.query.get_or_404(user_id)
+    
+    if request.method == "POST":
+        question1_answer = request.form.get("question1_answer").strip().lower()
+        question2_answer = request.form.get("question2_answer").strip().lower()
+        
+        if user:
+            # Verify answers to security questions
+            if user.question1_answer == question1_answer and user.question2_answer == question2_answer:
+                flash('Correct Answers! Set your new password...', 'success')
+                return redirect(url_for('auth.set_new_password', user_id=user.id))
+            else:
+                flash('Incorrect answers to security questions', 'error')
+                
+    return render_template(
+        "confirm_mail.html",
+        title="Cat Store - Reset Password - Confirm Mail",
+        custom_Css="confirm_mail",
+        user=user
+    )
+
+-----------------------------------
+
+Contents of ./theProject/auth/confirm_Reservation.py:
+from flask import flash, redirect, render_template, request, url_for
+
+from flask_login import login_required
+
+from ..models import User, Cat
+from . import auth
+
+@auth.route("/confirm_reservation/<int:cat_id>", methods=["GET", "POST"])
+@login_required
+def confirm_Reservation(cat_id):
+    cat = Cat.query.get_or_404(cat_id)
+
+    if request.method == "POST":
+        flash(
+            "Thank you for your reservation! The cat is now waiting for you at our store. You can visit us at Alexandria, Egypt. We are open from [10:00 AM To 5:00 PM]. For any inquiries, please call us at (01010101010).",
+            "success",
+        )
+        return render_template(
+            "confirm_reservation.html",
+            title="Cat Store - Confirm Reservation",
+            custom_Css="confirm",
+            cat=cat,
+            button_disabled=True,
+        )
+
+    return render_template(
+        "confirm_reservation.html",
+        title="Cat Store - Confirm Reservation",
+        custom_Css="confirm",
+        cat=cat,
+        button_disabled=False,
+    )
+
+-----------------------------------
+
+Contents of ./theProject/auth/gallery.py:
+from flask import render_template, request
+from flask_login import login_required
+
+from . import auth
+from ..models import Cat
+
+@auth.route("/gallery", methods=["GET", "POST"])
+@login_required
+def gallery():
+    color = request.args.get("color")
+    eye_color = request.args.get("eye_color")
+    age = request.args.get("age")
+    gender = request.args.get("gender")
+
+    # Query the database with filters
+    query = Cat.query
+    if color:
+        query = query.filter_by(color=color)
+    if eye_color:
+        query = query.filter_by(eye_color=eye_color)
+    if age:
+        query = query.filter_by(age=age)
+    if gender:
+        query = query.filter_by(gender=gender)
+
+    cats = query.all()
+    return render_template(
+        "gallery.html",
+        title="Cat Store - Gallery",
+        custom_Css="gallery",
+        cats=cats,
+    )
+
+-----------------------------------
+
+Contents of ./theProject/auth/homePage.py:
+from flask import redirect, render_template, request, url_for
+from flask_login import login_required
+
+from . import auth
+
+@auth.route("/home", methods=["GET", "POST"])
+@login_required
+def homePage():
+    if request.method == "POST":
+        color = request.form.get("color").capitalize().strip()
+        eye_color = request.form.get("eye_color").capitalize().strip()
+        age = request.form.get("age").lower().strip()
+        gender = request.form.get("gender").capitalize().strip()
+
+        return redirect(
+            url_for(
+                "auth.gallery", color=color, eye_color=eye_color, age=age, gender=gender
+            )
+        )
+
+    return render_template(
+        "home.html",
+        title="Cat Store - Home",
+        custom_Css="home",
+    )
+
+-----------------------------------
+
+Contents of ./theProject/auth/login.py:
+from flask import flash, redirect, render_template, request, url_for
+from werkzeug.security import check_password_hash
+
+from flask_login import login_user
+
+from ..models import User
+from . import auth
+
+@auth.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        # Handle login form submission
+        email = request.form.get("email")
+        password = request.form.get("password")
+        user = User.query.filter_by(email=email).first()
+
+        if user and check_password_hash(user.password, password):
+            login_user(user, remember=True)
+            flash("Welcome back! You've successfully logged in.", "success")
+            return redirect(url_for("auth.homePage"))
+        else:
+            flash("Oops! The email or password you entered is incorrect. Please try again.", "error")
+            return render_template(
+                "login.html",
+                title="Cat Store - LogIn",
+                custom_Css="login",
+                show_register=True,
+            )
+    return render_template(
+        "login.html",
+        title="Cat Store - LogIn",
+        custom_Css="login",
+        show_register=False,
+    )
+
+-----------------------------------
+
+Contents of ./theProject/auth/password_reset.py:
+from flask import flash, redirect, render_template, request, url_for
+
+from ..models import User
+from . import auth
+
+@auth.route('/register/password_reset', methods=['GET', 'POST'])
+def password_reset():
+    if request.method == "POST":
+        email = request.form.get('email')
+        
+        user = User.query.filter_by(email=email).first()
+    
+        if user:
+            flash("Your Email Exists!. Please follow these steps to procceed.", "success")
+            return redirect(url_for('auth.confirm_mail', user_id=user.id))
+        else:
+            flash('User not found', 'error')
+
+    return render_template('password_reset.html')
+
+-----------------------------------
+
+Contents of ./theProject/auth/profile.py:
+from flask import flash, redirect, render_template, request, url_for
+from flask_login import current_user, login_required
+
+from .. import db
+from . import auth
+
+@auth.route("/profile", methods=["GET", "POST"])
+@login_required
+def profile():
+    if request.method == "POST":
+        email = request.form.get("email").strip()
+        first_name = request.form.get("firstName").strip()
+        last_name = request.form.get("lastName").strip()
+        phone_number = request.form.get("phoneNumber").strip()
+
+        if not email or not first_name or not last_name or not phone_number:
+            flash("All fields are required.", category="error")
+        elif len(phone_number) < 10:
+            flash("Invalid phone number format.", category="error")
+        else:
+            current_user.email = email
+            current_user.first_name = first_name
+            current_user.last_name = last_name
+            current_user.phone_number = phone_number
+            db.session.commit()
+            flash("Profile updated successfully!", category="success")
+            return redirect(url_for("auth.profile"))
+
+    return render_template(
+        "profile.html",
+        title="Cat Store - Profile",
+        custom_Css="profile",
+    )
+
+-----------------------------------
+
+Contents of ./theProject/auth/register.py:
+from flask import flash, redirect, render_template, request, url_for
+from werkzeug.security import generate_password_hash
+
+from .. import db
+from ..models import User
+from . import auth
+
+@auth.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        email = request.form.get("email").strip()
+        first_name = request.form.get("firstName").strip()
+        last_name = request.form.get("lastName").strip()
+        phone_number = request.form.get("phoneNumber").strip()
+        password1 = request.form.get("password1")
+        password2 = request.form.get("password2")
+        question1 = request.form.get("question1")
+        question1_answer = request.form.get("question1_answer").strip().lower()
+        question2 = request.form.get("question2")
+        question2_answer = request.form.get("question2_answer").strip().lower()
+
+        if (
+            not email
+            or not first_name
+            or not last_name
+            or not phone_number
+            or not password1
+            or not password2
+            or not question1
+            or not question1_answer
+            or not question2
+            or not question2_answer
+        ):
+            flash("All fields are required.", category="error")
+        elif User.query.filter_by(email=email).first():
+            flash("Email already exists.", category="error")
+        elif len(first_name) < 3:
+            flash("Name must be at least 3 characters.", category="error")
+        elif len(last_name) < 3:
+            flash("Name must be at least 3 characters.", category="error")
+        elif len(phone_number) < 10:
+            flash("Invalid phone number format.", category="error")
+        elif password1 != password2:
+            flash("Passwords do not match.", category="error")
+        elif len(password1) < 8:
+            flash("Password must be at least 8 characters.", category="error")
+        elif len(question1_answer) < 3:
+            flash("Answer must be at least 3 characters.", category="error")
+        elif len(question2_answer) < 3:
+            flash("Answer must be at least 3 characters.", category="error")
+        else:
+            new_user = User(
+                email=email,
+                first_name=first_name,
+                last_name=last_name,
+                phone_number=phone_number,
+                password=generate_password_hash(password1, method="pbkdf2:sha256"),
+                question1=question1,
+                question1_answer=question1_answer,
+                question2=question2,
+                question2_answer=question2_answer,
+            )
+            db.session.add(new_user)
+            db.session.commit()
+            flash("Account created!", category="success")
+            return redirect(url_for("auth.login"))
+
+    return render_template(
+        "register.html",
+        title="Cat Store - Registration",
+        custom_Css="register",
+    )
+
+-----------------------------------
+
+Contents of ./theProject/auth/set_new_password.py:
+from flask import request, redirect, url_for, flash, render_template
+from werkzeug.security import generate_password_hash
+from . import auth
+from ..models import User
+from .. import db
+
+@auth.route('/password_reset/confirm_mail/<int:user_id>', methods=["GET", "POST"])
+def set_new_password(user_id):
+    user = User.query.get_or_404(user_id)
+    
+    if request.method == "POST":
+        password1 = request.form.get("password1")
+        password2 = request.form.get("password2")
+        
+        if not password1 or not password2:
+            flash("All fields are required.", category="error")
+        elif password1 != password2:
+            flash("Passwords do not match.", category="error")
+        elif len(password1) < 8:
+            flash("Password must be at least 8 characters.", category="error")
+        else:
+            # Update user password
+            user.password = generate_password_hash(password1, method="pbkdf2:sha256")
+            db.session.commit()
+            flash("Your password has been updated successfully.", category="success")
+            return redirect(url_for("auth.login"))
+
+    return render_template(
+        "set_new_password.html",
+        title="Cat Store - Reset Password - Confirm Mail",
+        custom_Css="confirm_mail",
+        user=user
+    )
+
+-----------------------------------
+
+Contents of ./theProject/auth/__init__.py:
+from flask import Blueprint
+
+# Create a Blueprint for authentication routes
+auth = Blueprint('auth', __name__)
+
+# Import the routes from other files in the auth folder
+from . import login, register, password_reset, homePage, profile, gallery, confirm_Reservation, password_reset, confirm_mail, set_new_password
+
+-----------------------------------
+
+Contents of ./theProject/main/logout.py:
+from flask import flash, redirect, url_for
+from flask_login import login_required, logout_user
+
+from . import main
+
+@main.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    flash("You have been logged out.", category="success")
+    return redirect(url_for("auth.login"))
+
+-----------------------------------
+
+Contents of ./theProject/main/welcome.py:
+from flask import render_template
+from . import main
+
+@main.route("/")
+def welcome():
+    return render_template(
+        "welcome.html",
+        title="Welcome To Cat Store",
+        custom_Css="welcome",
+    )
+
+-----------------------------------
+
+Contents of ./theProject/main/__init__.py:
+from flask import Blueprint
+from flask_login import login_required
+
+main = Blueprint("main", __name__)
+
+from . import welcome, logout
+
+-----------------------------------
+
+Contents of ./theProject/models/cat.py:
+from flask_login import UserMixin
+
+from .. import db
+
+class Cat(db.Model):
+    __tablename__ = "cats"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    color = db.Column(db.String(20), nullable=False)
+    eye_color = db.Column(db.String(20), nullable=False)
+    age = db.Column(
+        db.String(20), nullable=False
+    )  # Example: 'kitten', 'adult', 'senior'
+    gender = db.Column(db.String(10), nullable=False)  # 'male' or 'female'
+    price = db.Column(db.String(10), nullable=False)
+    reserved = db.Column(db.Boolean, default=False)
+    image = db.Column(db.String(100), nullable=False)  # Path to the image file
+
+    def __repr__(self):
+        return f"<Cat {self.name}>"
+
+-----------------------------------
+
+Contents of ./theProject/models/user.py:
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
+
+from .. import db
+
+class User(UserMixin, db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    first_name = db.Column(db.String(20), nullable=True)
+    last_name = db.Column(db.String(20), nullable=True)
+    phone_number = db.Column(db.String(20), nullable=True)
+    password = db.Column(db.String(128), nullable=False)
+    question1 = db.Column(db.String(150), nullable=False)
+    question1_answer = db.Column(db.String(150), nullable=False)
+    question2 = db.Column(db.String(150), nullable=False)
+    question2_answer = db.Column(db.String(150), nullable=False)
+
+-----------------------------------
+
+Contents of ./theProject/models/__init__.py:
+from .cat import Cat
+from .user import User
+
+-----------------------------------
+
+Contents of ./theProject/static/css/styles.css:
+/* General Body Styling */
+body {
+	background-color: #f1f3f6;
+	font-family: "Roboto", sans-serif;
+	color: #333;
+	margin: 0;
+	padding: 0;
+}
+
+/* Page Header */
+h1 {
+	font-size: 2.5rem;
+	color: #2e8b57;
+	text-align: center;
+	margin: 40px 0;
+	font-weight: 700;
+}
+
+/* Filter Form Styling */
+form {
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+	flex-wrap: wrap;
+	max-width: 900px;
+	margin: 0 auto 40px;
+}
+
+form label {
+	font-weight: 500;
+	color: #333;
+}
+
+form select {
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	background-color: #fff;
+}
+
+form button {
+	background-color: #4a90e2;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	font-size: 16px;
+	cursor: pointer;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+form button:hover {
+	background-color: #357abd;
+}
+
+/* Cat Gallery Styling */
+.cat-gallery {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr); /* 3 columns per row */
+	gap: 20px;
+	padding: 20px;
+	max-width: 1200px;
+	margin: auto;
+}
+
+/* Individual Cat Card */
+.cat-item {
+	background-color: #fff;
+	border-radius: 12px;
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cat-item:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Cat Image Styling */
+.cat-image {
+	width: 100%;
+	height: 200px;
+	object-fit: cover;
+}
+
+/* Cat Info Section */
+.cat-info {
+	padding: 15px;
+	text-align: left;
+}
+
+.cat-name {
+	font-size: 1.4rem;
+	font-weight: 700;
+	margin-bottom: 10px;
+	color: #333;
+}
+
+.cat-info p {
+	margin: 5px 0;
+	font-size: 1rem;
+	color: #666;
+}
+
+.cat-info p span {
+	font-weight: 600;
+	color: #333;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+	.cat-gallery {
+		grid-template-columns: 1fr; /* 1 column per row on small screens */
+	}
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+	.cat-gallery {
+		grid-template-columns: repeat(
+			2,
+			1fr
+		); /* 2 columns per row on medium screens */
+	}
+}
+
+-----------------------------------
+
+Contents of ./theProject/templates/base.html:
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+			integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+			crossorigin="anonymous"
+		/>
+		<link rel="stylesheet" href="/static/css/styles.css" />
+		{% if custom_Css %}
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='css/' + custom_Css + '.css') }}"
+		/>
+		{% endif %}
+		<title>{{ title }}</title>
+	</head>
+
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<button
+				class="navbar-toggler"
+				type="button"
+				data-toggle="collapse"
+				data-target="#navbar"
+			>
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbar">
+				<div class="navbar-nav">
+					{% if current_user.is_authenticated %}
+					<a
+						class="nav-item nav-link"
+						id="profile"
+						href="{{ url_for('auth.profile') }}"
+						>Profile</a
+					>
+					<a
+						class="nav-item nav-link"
+						id="home"
+						href="{{ url_for('auth.homePage') }}"
+						>Home</a
+					>
+					<a
+						class="nav-item nav-link"
+						id="gallery"
+						href="{{ url_for('auth.gallery') }}"
+						>Gallery</a
+					>
+					<a
+						class="nav-item nav-link"
+						id="logout"
+						href="{{ url_for('main.logout') }}"
+						>Logout</a
+					>
+					{% elif current_user.is_authenticated == False %}
+					<a class="nav-item nav-link" id="login" href="/login"
+						>Login</a
+					>
+					<a class="nav-item nav-link" id="signup" href="/register"
+						>Register</a
+					>
+					{% endif %}
+				</div>
+			</div>
+		</nav>
+		{% with messages = get_flashed_messages(with_categories=true) %} {% if
+		messages %} {% for category, message in messages %} {% if category ==
+		'error' %}
+		<div
+			class="alert alert-danger alter-dismissable fade show"
+			role="alert"
+		>
+			{{ message }}
+			<button type="button" class="close" data-dismiss="alert">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		{% else %}
+		<div
+			class="alert alert-success alter-dismissable fade show"
+			role="alert"
+		>
+			{{ message }}
+			<button type="button" class="close" data-dismiss="alert">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		{% endif %} {% endfor %} {% endif %} {% endwith %}
+		<div class="container">{% block content %} {% endblock %}</div>
+
+		<footer>
+			<!-- Footer content -->
+			<div class="about-section">
+				<h2>About Us</h2>
+				<p>
+					Welcome to our cat store! We are dedicated to finding loving
+					homes for our furry friends. Our store is located at
+					Alexandria, Egypt. We are open from [10:00 AM To 5:00 PM].
+					Feel free to contact us at (01010101010) for any inquiries.
+				</p>
+			</div>
+		</footer>
+
+		<script
+			src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+			integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+			integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+			integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+			crossorigin="anonymous"
+		></script>
+	</body>
+</html>
+
+-----------------------------------
+
+Contents of ./theProject/templates/confirm_mail.html:
+{% extends "base.html" %} {% block content %}
+<div class="profile-section text-center">
+	<h2 class="display-4 font-weight-bold mb-4">Your Profile</h2>
+
+	<form
+		method="POST"
+		id="profileForm"
+		class="mx-auto"
+		style="max-width: 600px"
+	>
+		<!-- Email -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Email Address</legend>
+			<input
+				type="email"
+				class="form-control"
+				id="email"
+				name="email"
+				value="{{ user.email }}"
+				readonly
+			/>
+		</fieldset>
+
+		<!-- Question One  -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">{{ user.question1 }}</legend>
+			<input
+				type="text"
+				class="form-control"
+				id="question1_answer"
+				name="question1_answer"
+				placeholder="Enter your answer"
+				required
+			/>
+		</fieldset>
+
+		<!-- Question Two  -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">{{ user.question2 }}</legend>
+			<input
+				type="text"
+				class="form-control"
+				id="question2_answer"
+				name="question2_answer"
+				placeholder="Enter your answer"
+				required
+			/>
+		</fieldset>
+
+		<!-- Submit Button -->
+		<button type="submit" class="btn btn-primary btn-block mt-4">
+			Reset
+		</button>
+	</form>
+</div>
+
+<!-- Custom CSS -->
+<style>
+	.register-section {
+		margin-top: 30px;
+	}
+
+	.box {
+		border: 2px solid #ccc;
+		padding: 20px;
+		position: relative;
+		margin-bottom: 30px;
+		border-radius: 8px;
+    }
+
+	.legend-label {
+		font-size: 1.2rem;
+		font-weight: bold;
+		color: #007bff;
+		position: relative;
+		top: -15px;
+		left: 15px;
+		background-color: white;
+		padding: 0 10px;
+	}
+
+	.form-control {
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1rem;
+	}
+
+	.btn-primary {
+		background-color: #007bff;
+		border-color: #007bff;
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1.2rem;
+	}
+
+	.btn-primary:hover {
+		background-color: #0056b3;
+		border-color: #004085;
+	}
+	span {
+		color: red;
+	}
+</style>
+{% endblock %}
+
+-----------------------------------
+
+Contents of ./theProject/templates/confirm_reservation.html:
+{% extends 'base.html' %} {% block content %}
+<h1 class="text-center mb-4">Confirm Reservation</h1>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 text-center">
+			<img
+				src="{{ url_for('static', filename='cat-images/' + cat.image) }}"
+				alt="{{ cat.name }}"
+				class="img-fluid cat-image"
+			/>
+		</div>
+		<div class="col-md-6">
+			<div class="cat-details">
+				<p><strong>Cat Name:</strong> {{ cat.name }}</p>
+				<p><strong>Color:</strong> {{ cat.color }}</p>
+				<p><strong>Eye Color:</strong> {{ cat.eye_color }}</p>
+				<p><strong>Age:</strong> {{ cat.age }}</p>
+				<p><strong>Gender:</strong> {{ cat.gender }}</p>
+				<p>
+					<strong>Price:</strong>
+					<span class="price">${{ cat.price }}</span>
+				</p>
+				<p><strong>Status:</strong> Reserved</p>
+			</div>
+			<div class="confirmation-message mt-4">
+				{% with messages = get_flashed_messages(with_categories=True) %}
+				{% if messages %}
+				<div class="alert alert-success" role="alert">
+					{% for category, message in messages %} {{ message }} {%
+					endfor %}
+				</div>
+				{% endif %} {% endwith %}
+
+				<form
+					action="{{ url_for('auth.confirm_Reservation', cat_id=cat.id) }}"
+					method="POST"
+				>
+					{% if button_disabled %}
+					<button
+						type="button"
+						class="btn btn-success"
+						id="confirmButton"
+						disabled
+					>
+						Confirmed
+					</button>
+					{% else %}
+					<button
+						type="submit"
+						class="btn btn-success"
+						id="confirmButton"
+					>
+						Confirm
+					</button>
+					{% endif %}
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.cat-image {
+		max-width: 100%;
+		height: auto;
+		border-radius: 8px;
+	}
+
+	.price {
+		font-size: 1.5rem;
+		color: #28a745;
+		font-weight: bold;
+	}
+
+	.cat-details p {
+		font-size: 1.2rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.confirmation-message {
+		margin-top: 20px;
+	}
+
+	#confirmButton {
+		width: 100%;
+	}
+</style>
+{% endblock %}
+
+-----------------------------------
+
+Contents of ./theProject/templates/gallery.html:
+{% extends 'base.html' %} {% block content %}
+<div class="gallery-container">
+	<h1 class="display-4 font-weight-bold mb-4 text-center">Cat Gallery</h1>
+
+	<!-- Filter Form -->
+	<form method="get" action="/gallery" class="filter-form">
+		<!-- Color Filter -->
+		<div class="form-group filter-box">
+			<label for="color" class="font-weight-bold">Color</label>
+			<select name="color" id="color" class="form-control">
+				<option value="">Any</option>
+				<option value="White">White</option>
+				<option value="Black">Black</option>
+				<option value="Orange">Orange</option>
+				<option value="Grey">Grey</option>
+				<option value="Mix">Mix</option>
+			</select>
+		</div>
+
+		<!-- Eye Color Filter -->
+		<div class="form-group filter-box">
+			<label for="eye_color" class="font-weight-bold">Eye Color</label>
+			<select name="eye_color" id="eye_color" class="form-control">
+				<option value="">Any</option>
+				<option value="Blue">Blue</option>
+				<option value="Green">Green</option>
+				<option value="Yellow">Yellow</option>
+				<option value="Grey">Grey</option>
+			</select>
+		</div>
+
+		<!-- Age Filter -->
+		<div class="form-group filter-box">
+			<label for="age" class="font-weight-bold">Age</label>
+			<select name="age" id="age" class="form-control">
+				<option value="">Any</option>
+				<option value="kitten">Kitten</option>
+				<option value="adult">Adult</option>
+				<option value="senior">Senior</option>
+			</select>
+		</div>
+
+		<!-- Gender Filter -->
+		<div class="form-group filter-box">
+			<label for="gender" class="font-weight-bold">Gender</label>
+			<select name="gender" id="gender" class="form-control">
+				<option value="">Any</option>
+				<option value="Male">Male</option>
+				<option value="Female">Female</option>
+			</select>
+		</div>
+
+		<!-- Filter Button -->
+		<button type="submit" class="btn btn-primary btn-block mt-3">
+			Filter
+		</button>
+	</form>
+
+	<!-- Cat Gallery -->
+	<div class="cat-gallery mt-4">
+		{% for cat in cats %}
+		<div class="cat-item">
+			<a href="{{ url_for('auth.confirm_Reservation', cat_id=cat.id) }}">
+				<img
+					class="cat-image"
+					src="{{ url_for('static', filename='cat-images/' + cat.image) }}"
+					alt="Cat Image {{ loop.index }}"
+					loading="lazy"
+				/>
+			</a>
+			<div class="cat-info">
+				<h2 class="cat-name">{{ cat.name }}</h2>
+				<p><span class="info-label">Color:</span> {{ cat.color }}</p>
+				<p>
+					<span class="info-label">Eye Color:</span> {{ cat.eye_color
+					}}
+				</p>
+				<p><span class="info-label">Age:</span> {{ cat.age }}</p>
+				<p><span class="info-label">Gender:</span> {{ cat.gender }}</p>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}
+
+<!-- Custom CSS for gallery styling -->
+<style>
+	.gallery-container {
+		padding: 20px;
+	}
+
+	.filter-form {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: 20px;
+		margin-bottom: 40px;
+	}
+
+	.form-group {
+		margin-bottom: 0;
+	}
+
+	.filter-box {
+		border: 2px solid #e0e0e0;
+		padding: 15px;
+		border-radius: 8px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		transition: border-color 0.3s;
+	}
+
+	.filter-box:hover {
+		border-color: #007bff;
+	}
+
+	.font-weight-bold {
+		font-weight: 700;
+	}
+
+	.form-control {
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1rem;
+		border: 1px solid #ccc;
+		transition: border-color 0.3s;
+	}
+
+	.form-control:focus {
+		border-color: #007bff;
+		box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+	}
+
+	.cat-gallery {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 20px;
+	}
+
+	.cat-item {
+		border: 2px solid #e0e0e0;
+		padding: 15px;
+		border-radius: 8px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		transition: border-color 0.3s, transform 0.3s;
+	}
+
+	.cat-item:hover {
+		border-color: #007bff;
+		transform: scale(1.02);
+	}
+
+	.cat-image {
+		width: 100%;
+		height: auto;
+		border-radius: 8px;
+		transition: opacity 0.3s;
+	}
+
+	.cat-item:hover .cat-image {
+		opacity: 0.9;
+	}
+
+	.cat-info {
+		margin-top: 10px;
+	}
+
+	.cat-name {
+		font-size: 1.5rem;
+		font-weight: 700;
+		margin-bottom: 10px;
+	}
+
+	.info-label {
+		font-weight: 700;
+		color: #333;
+	}
+
+	.btn-primary {
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1.2rem;
+		transition: background-color 0.3s, border-color 0.3s;
+	}
+
+	.btn-primary:hover {
+		background-color: #0056b3;
+		border-color: #004085;
+	}
+</style>
+
+-----------------------------------
+
+Contents of ./theProject/templates/home.html:
+{% extends 'base.html' %} {% block content %}
+<div class="home-section text-center">
+	<h2 class="display-4 font-weight-bold mb-4">Customize Your Perfect Cat</h2>
+	<p class="lead mb-5">
+		Choose your preferences below to find the perfect cat match for you!
+	</p>
+
+	<form method="POST" class="mx-auto" style="max-width: 600px">
+		<!-- Cat Color -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Favorite Cat Color</legend>
+			<div class="btn-group-toggle" data-toggle="buttons">
+				<label class="btn btn-outline-primary">
+					<input
+						id="any"
+						type="radio"
+						name="color"
+						value=""
+						autocomplete="off"
+						checked
+					/>
+					Any
+				</label>
+				<label class="btn btn-outline-primary">
+					<input
+						id="white"
+						type="radio"
+						name="color"
+						value="White"
+						autocomplete="off"
+					/>
+					White
+				</label>
+				<label class="btn btn-outline-primary">
+					<input
+						id="black"
+						type="radio"
+						name="color"
+						value="Black"
+						autocomplete="off"
+					/>
+					Black
+				</label>
+				<label class="btn btn-outline-primary">
+					<input
+						id="orange"
+						type="radio"
+						name="color"
+						value="Orange"
+						autocomplete="off"
+					/>
+					Orange
+				</label>
+				<label class="btn btn-outline-primary">
+					<input
+						id="grey"
+						type="radio"
+						name="color"
+						value="Grey"
+						autocomplete="off"
+					/>
+					Grey
+				</label>
+				<label class="btn btn-outline-primary">
+					<input
+						id="mix"
+						type="radio"
+						name="color"
+						value="Mix"
+						autocomplete="off"
+					/>
+					Mix
+				</label>
+			</div>
+		</fieldset>
+
+		<!-- Eye Color -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Preferred Eye Color</legend>
+			<div class="btn-group-toggle" data-toggle="buttons">
+				<label class="btn btn-outline-info">
+					<input
+						id="any"
+						type="radio"
+						name="eye_color"
+						value=""
+						autocomplete="off"
+						checked
+					/>
+					Any
+				</label>
+				<label class="btn btn-outline-info">
+					<input
+						id="blue"
+						type="radio"
+						name="eye_color"
+						value="Blue"
+						autocomplete="off"
+					/>
+					Blue
+				</label>
+				<label class="btn btn-outline-info">
+					<input
+						id="green"
+						type="radio"
+						name="eye_color"
+						value="Green"
+						autocomplete="off"
+					/>
+					Green
+				</label>
+				<label class="btn btn-outline-info">
+					<input
+						id="yellow"
+						type="radio"
+						name="eye_color"
+						value="Yellow"
+						autocomplete="off"
+					/>
+					Yellow
+				</label>
+				<label class="btn btn-outline-info">
+					<input
+						id="grey"
+						type="radio"
+						name="eye_color"
+						value="Grey"
+						autocomplete="off"
+					/>
+					Grey
+				</label>
+			</div>
+		</fieldset>
+
+		<!-- Cat Age -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Desired Cat Age</legend>
+			<div class="btn-group-toggle" data-toggle="buttons">
+				<label class="btn btn-outline-success">
+					<input
+						id="any"
+						type="radio"
+						name="age"
+						value=""
+						autocomplete="off"
+						checked
+					/>
+					Any
+				</label>
+				<label class="btn btn-outline-success">
+					<input
+						id="kitten"
+						type="radio"
+						name="age"
+						value="kitten"
+						autocomplete="off"
+					/>
+					Kitten
+				</label>
+				<label class="btn btn-outline-success">
+					<input
+						id="adult"
+						type="radio"
+						name="age"
+						value="adult"
+						autocomplete="off"
+					/>
+					Adult
+				</label>
+				<label class="btn btn-outline-success">
+					<input
+						id="senior"
+						type="radio"
+						name="age"
+						value="senior"
+						autocomplete="off"
+					/>
+					Senior
+				</label>
+			</div>
+		</fieldset>
+
+		<!-- Gender -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Preferred Cat Gender</legend>
+			<div class="btn-group-toggle" data-toggle="buttons">
+				<label class="btn btn-outline-warning">
+					<input
+						id="any"
+						type="radio"
+						name="gender"
+						value=""
+						autocomplete="off"
+						checked
+					/>
+					Any
+				</label>
+				<label class="btn btn-outline-warning">
+					<input
+						id="male"
+						type="radio"
+						name="gender"
+						value="Male"
+						autocomplete="off"
+					/>
+					Male
+				</label>
+				<label class="btn btn-outline-warning">
+					<input
+						id="female"
+						type="radio"
+						name="gender"
+						value="Female"
+						autocomplete="off"
+					/>
+					Female
+				</label>
+			</div>
+		</fieldset>
+
+		<!-- Submit Button -->
+		<button type="submit" class="btn btn-primary btn-block mt-4">
+			Submit
+		</button>
+	</form>
+</div>
+
+<!-- Custom CSS for box layout -->
+<style>
+	.box {
+		border: 2px solid #ccc;
+		padding: 20px;
+		position: relative;
+		margin-bottom: 30px;
+		border-radius: 8px;
+	}
+	.legend-label {
+		font-size: 1.2rem;
+		font-weight: bold;
+		color: #007bff;
+		position: absolute;
+		top: -15px;
+		left: 15px;
+		background-color: white;
+		padding: 0 10px;
+	}
+	.btn-group-toggle {
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+	}
+	.btn-group-toggle .btn {
+		flex: 1;
+		margin-right: 5px;
+	}
+	.btn-group-toggle .btn input[type="radio"] {
+		position: absolute;
+		opacity: 0;
+	}
+	.btn-group-toggle .btn.active {
+		background-color: #007bff;
+		color: white;
+	}
+	.btn-group-toggle .btn-outline-primary.active {
+		background-color: #007bff;
+		color: white;
+	}
+	.btn-group-toggle .btn-outline-info.active {
+		background-color: #17a2b8;
+		color: white;
+	}
+	.btn-group-toggle .btn-outline-success.active {
+		background-color: #28a745;
+		color: white;
+	}
+	.btn-group-toggle .btn-outline-warning.active {
+		background-color: #ffc107;
+		color: white;
+	}
+</style>
+
+{% endblock %}
+
+-----------------------------------
+
+Contents of ./theProject/templates/login.html:
+{% extends 'base.html' %} {% block content %}
+<div class="login-section text-center">
+	<h1 class="display-4 font-weight-bold mb-4">Welcome Back!</h1>
+	<p class="lead mb-4">
+		Log in to access your account and explore our latest cats looking for a
+		loving home.
+	</p>
+
+	<!-- Login Form -->
+	<form method="POST" class="mx-auto" style="max-width: 400px" id="loginForm">
+		<!-- Email Field -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Email Address</legend>
+			<input
+				type="email"
+				class="form-control"
+				id="email"
+				name="email"
+				placeholder="Enter your email"
+				required
+			/>
+		</fieldset>
+
+		<!-- Password Field -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Password</legend>
+			<input
+				type="password"
+				class="form-control"
+				id="password"
+				name="password"
+				placeholder="Enter your password"
+				required
+			/>
+		</fieldset>
+
+		<!-- Log In Button -->
+		<button type="submit" class="btn btn-primary btn-block mt-4">
+			Log In
+		</button>
+
+		<!-- Divider -->
+		<hr class="my-4" />
+
+		<!-- Register Link -->
+		<a href="{{ url_for('auth.register') }}">
+			<p class="text-muted">Don't have an account yet?</p>
+		</a>
+
+		<a href="{{ url_for('auth.password_reset') }}">
+			<p class="text-muted">Forget Your Password?</p>
+		</a>
+
+		<!-- Register Button (hidden initially) -->
+		<button
+			id="registerBtn"
+			style="display: none"
+			class="btn btn-secondary btn-block"
+		>
+			<a href="{{ url_for('auth.register') }}" class="text-white"
+				>Register Now</a
+			>
+		</button>
+	</form>
+</div>
+
+<!-- Script to handle register button on error -->
+<script>
+	// Get the show_register value from the backend (server-side errors)
+	const showRegister = {{ show_register | tojson }};
+	if (showRegister) {
+	    document.getElementById("registerBtn").style.display = "block";
+	}
+
+	// Client-side validation
+	const loginForm = document.getElementById('loginForm');
+	loginForm.addEventListener('submit', function (event) {
+	    // Check if the form is valid
+	    if (!loginForm.checkValidity()) {
+	        // If invalid, prevent submission and show Register button
+	        event.preventDefault();
+	        event.stopPropagation();
+	        document.getElementById("registerBtn").style.display = "block";
+	    }
+
+	    // Add Bootstrap validation class to trigger feedback
+	    loginForm.classList.add('was-validated');
+	}, false);
+</script>
+
+<!-- Custom CSS for form styling -->
+<style>
+	.login-section {
+		margin-top: 50px;
+	}
+
+	.box {
+		border: 2px solid #ccc;
+		padding: 20px;
+		position: relative;
+		margin-bottom: 30px;
+		border-radius: 8px;
+	}
+
+	.legend-label {
+		font-size: 1.2rem;
+		font-weight: bold;
+		color: #007bff;
+		position: absolute;
+		top: -15px;
+		left: 15px;
+		background-color: white;
+		padding: 0 10px;
+	}
+
+	.form-control {
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1rem;
+	}
+
+	.btn-block {
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1.2rem;
+	}
+
+	.btn-primary:hover {
+		background-color: #0056b3;
+		border-color: #004085;
+	}
+
+	.btn-secondary:hover {
+		background-color: #6c757d;
+		border-color: #5a6268;
+	}
+
+	hr {
+		border-color: #ddd;
+	}
+</style>
+{% endblock %}
+
+-----------------------------------
+
+Contents of ./theProject/templates/password_reset.html:
+{% extends "base.html" %} {% block content %}
+<div class="profile-section text-center">
+	<h2 class="display-4 font-weight-bold mb-4">Your Profile</h2>
+
+	<form method="POST" id="questions" class="mx-auto" style="max-width: 600px">
+		<!-- Email -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Email Address</legend>
+			<input
+				type="email"
+				class="form-control"
+				id="email"
+				name="email"
+				placeholder="Enter your email"
+				required
+			/>
+		</fieldset>
+
+		<!-- Submit Button -->
+		<button type="submit" class="btn btn-primary btn-block mt-4">
+			Reset
+		</button>
+	</form>
+</div>
+
+<!-- Custom CSS -->
+<style>
+	.profile-section {
+		margin-top: 30px;
+	}
+
+	.box {
+		border: 2px solid #ccc;
+		padding: 20px;
+		position: relative;
+		margin-bottom: 30px;
+		border-radius: 8px;
+	}
+
+	.legend-label {
+		font-size: 1.2rem;
+		font-weight: bold;
+		color: #007bff;
+		position: absolute;
+		top: -15px;
+		left: 15px;
+		background-color: white;
+		padding: 0 10px;
+	}
+
+	.form-control {
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1rem;
+	}
+
+	.button-group {
+		display: flex;
+		justify-content: center;
+		gap: 20px;
+	}
+
+	.btn-primary,
+	.btn-success {
+		padding: 12px 24px;
+		font-size: 1.2rem;
+		border-radius: 8px;
+	}
+
+	.btn-primary:hover {
+		background-color: #0056b3;
+		border-color: #004085;
+	}
+
+	.btn-success:hover {
+		background-color: #28a745;
+		border-color: #218838;
+	}
+</style>
+{% endblock %}
+
+-----------------------------------
+
+Contents of ./theProject/templates/profile.html:
+{% extends "base.html" %} {% block content %}
+<div class="profile-section text-center">
+	<h2 class="display-4 font-weight-bold mb-4">Your Profile</h2>
+
+	<form
+		method="POST"
+		id="profileForm"
+		class="mx-auto"
+		style="max-width: 600px"
+	>
+		<!-- Email -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Email Address</legend>
+			<input
+				type="email"
+				class="form-control"
+				id="email"
+				name="email"
+				value="{{ current_user.email }}"
+				readonly
+			/>
+		</fieldset>
+
+		<!-- First Name -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">First Name</legend>
+			<input
+				type="text"
+				class="form-control"
+				id="firstName"
+				name="firstName"
+				value="{{ current_user.first_name }}"
+				readonly
+			/>
+		</fieldset>
+
+		<!-- Last Name -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Last Name</legend>
+			<input
+				type="text"
+				class="form-control"
+				id="lastName"
+				name="lastName"
+				value="{{ current_user.last_name }}"
+				readonly
+			/>
+		</fieldset>
+
+		<!-- Phone Number -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Phone Number</legend>
+			<input
+				type="text"
+				class="form-control"
+				id="phoneNumber"
+				name="phoneNumber"
+				value="{{ current_user.phone_number }}"
+				readonly
+			/>
+		</fieldset>
+
+		<!-- Buttons -->
+		<div class="button-group mt-4">
+			<button
+				type="button"
+				class="btn btn-primary"
+				id="editButton"
+				onclick="enableEdit()"
+			>
+				Edit
+			</button>
+			<button
+				type="submit"
+				class="btn btn-success d-none"
+				id="saveButton"
+			>
+				Save
+			</button>
+		</div>
+	</form>
+</div>
+
+<!-- JavaScript to enable form editing -->
+<script>
+	function enableEdit() {
+		document.getElementById("email").readOnly = false;
+		document.getElementById("firstName").readOnly = false;
+		document.getElementById("lastName").readOnly = false;
+		document.getElementById("phoneNumber").readOnly = false;
+		document.getElementById("editButton").classList.add("d-none");
+		document.getElementById("saveButton").classList.remove("d-none");
+	}
+</script>
+
+<!-- Custom CSS -->
+<style>
+	.profile-section {
+		margin-top: 30px;
+	}
+
+	.box {
+		border: 2px solid #ccc;
+		padding: 20px;
+		position: relative;
+		margin-bottom: 30px;
+		border-radius: 8px;
+	}
+
+	.legend-label {
+		font-size: 1.2rem;
+		font-weight: bold;
+		color: #007bff;
+		position: absolute;
+		top: -15px;
+		left: 15px;
+		background-color: white;
+		padding: 0 10px;
+	}
+
+	.form-control {
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1rem;
+	}
+
+	.button-group {
+		display: flex;
+		justify-content: center;
+		gap: 20px;
+	}
+
+	.btn-primary,
+	.btn-success {
+		padding: 12px 24px;
+		font-size: 1.2rem;
+		border-radius: 8px;
+	}
+
+	.btn-primary:hover {
+		background-color: #0056b3;
+		border-color: #004085;
+	}
+
+	.btn-success:hover {
+		background-color: #28a745;
+		border-color: #218838;
+	}
+</style>
+{% endblock %}  
+
+-----------------------------------
+
+Contents of ./theProject/templates/register.html:
+{% extends "base.html" %} {% block content %}
+<div class="register-section text-center">
+	<h2 class="display-4 font-weight-bold mb-4">Create Your Account</h2>
+	<p class="lead mb-5">Sign up with your details below</p>
+
+	<form method="POST" class="mx-auto" style="max-width: 600px">
+		<!-- Email -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Email Address <span>*</span></legend>
+			<input
+				type="email"
+				class="form-control"
+				id="email"
+				name="email"
+				placeholder="Enter email"
+				required
+			/>
+		</fieldset>
+
+		<!-- First Name -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">First Name <span>*</span></legend>
+			<input
+				type="text"
+				class="form-control"
+				id="firstName"
+				name="firstName"
+				placeholder="Enter first name"
+				required
+			/>
+		</fieldset>
+
+		<!-- Last Name -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Last Name <span>*</span></legend>
+			<input
+				type="text"
+				class="form-control"
+				id="lastName"
+				name="lastName"
+				placeholder="Enter last name"
+				required
+			/>
+		</fieldset>
+
+		<!-- Phone Number -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Phone Number <span>*</span></legend>
+			<input
+				type="text"
+				class="form-control"
+				id="phoneNumber"
+				name="phoneNumber"
+				placeholder="Enter phone number"
+				required
+			/>
+		</fieldset>
+
+		<!-- Password -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Password <span>*</span></legend>
+			<input
+				type="password"
+				class="form-control"
+				id="password1"
+				name="password1"
+				placeholder="Enter password"
+				required
+			/>
+		</fieldset>
+
+		<!-- Confirm Password -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">
+				Confirm Password <span>*</span>
+			</legend>
+			<input
+				type="password"
+				class="form-control"
+				id="password2"
+				name="password2"
+				placeholder="Confirm password"
+				required
+			/>
+		</fieldset>
+
+		<!-- Question One -->
+		<fieldset class="form-group box">
+			<legend for="question1" class="legend-label">
+				Security Question 1 <span>*</span>
+			</legend>
+			<select
+				class="form-control"
+				id="question1"
+				name="question1"
+				required
+				style="padding: 8px"
+			>
+				<option class="form-control" value="">Select a question</option>
+				<option
+					class="form-control"
+					value="What is the name of your first pet?"
+				>
+					What is the name of your first pet?
+				</option>
+				<option
+					class="form-control"
+					value="What is your mother's maiden name?"
+				>
+					What is your mother's maiden name?
+				</option>
+				<option
+					class="form-control"
+					value="What is the name of your first school?"
+				>
+					What is the name of your first school?
+				</option>
+				<option
+					class="form-control"
+					value="In what city were you born?"
+				>
+					In what city were you born?
+				</option>
+			</select>
+			<br />
+			<input
+				type="text"
+				class="form-control"
+				id="question1_answer"
+				name="question1_answer"
+				placeholder="Enter your answer"
+				required
+			/>
+		</fieldset>
+
+		<!-- Question Two -->
+		<fieldset class="form-group box">
+			<legend for="question2" class="legend-label">
+				Security Question 2 <span>*</span>
+			</legend>
+			<select
+				class="form-control"
+				id="question2"
+				name="question2"
+				required
+				style="padding: 8px"
+			>
+				<option value="">Select a question</option>
+				<option value="What is the name of your childhood best friend?">
+					What is the name of your childhood best friend?
+				</option>
+				<option value="What was your first job?">
+					What was your first job?
+				</option>
+				<option value="Who was your favorite teacher in school?">
+					Who was your favorite teacher in school?
+				</option>
+				<option value="What is the name of the street you grew up on?">
+					What is the name of the street you grew up on?
+				</option>
+			</select>
+			<br />
+			<input
+				type="text"
+				class="form-control"
+				id="question2_answer"
+				name="question2_answer"
+				placeholder="Enter your answer"
+				required
+			/>
+		</fieldset>
+
+		<!-- Submit Button -->
+		<button type="submit" class="btn btn-primary btn-block mt-4">
+			Sign Up
+		</button>
+	</form>
+</div>
+
+<!-- Custom CSS for improved box layout -->
+<style>
+	.register-section {
+		margin-top: 30px;
+	}
+
+	.box {
+		border: 2px solid #ccc;
+		padding: 20px;
+		position: relative;
+		margin-bottom: 30px;
+		border-radius: 8px;
+	}
+
+	.legend-label {
+		font-size: 1.2rem;
+		font-weight: bold;
+		color: #007bff;
+		position: absolute;
+		top: -15px;
+		left: 15px;
+		background-color: white;
+		padding: 0 10px;
+	}
+
+	.form-control {
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1rem;
+	}
+
+	.btn-primary {
+		background-color: #007bff;
+		border-color: #007bff;
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1.2rem;
+	}
+
+	.btn-primary:hover {
+		background-color: #0056b3;
+		border-color: #004085;
+	}
+	span {
+		color: red;
+	}
+</style>
+{% endblock %}
+
+-----------------------------------
+
+Contents of ./theProject/templates/set_new_password.html:
+{% extends "base.html" %} {% block content %}
+<div class="profile-section text-center">
+	<h2 class="display-4 font-weight-bold mb-4">Your Profile</h2>
+
+	<form method="POST" id="questions" class="mx-auto" style="max-width: 600px">
+		<!-- Email -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Email Address</legend>
+			<input
+				type="email"
+				class="form-control"
+				id="email"
+				name="email"
+				placeholder="{{ user.email }}"
+				readonly
+			/>
+		</fieldset>
+
+		<!-- Password1  -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Enter Your New Password:</legend>
+			<input
+				type="password"
+				class="form-control"
+				id="password1"
+				name="password1"
+				placeholder="Enter your new password"
+				required
+			/>
+		</fieldset>
+
+		<!-- Password2  -->
+		<fieldset class="form-group box">
+			<legend class="legend-label">Enter Your New Password:</legend>
+			<input
+				type="password"
+				class="form-control"
+				id="password2"
+				name="password2"
+				placeholder="Enter your new password"
+				required
+			/>
+		</fieldset>
+
+		<!-- Submit Button -->
+		<button type="submit" class="btn btn-primary btn-block mt-4">
+			Reset
+		</button>
+	</form>
+</div>
+
+<!-- Custom CSS -->
+<style>
+	.register-section {
+		margin-top: 30px;
+	}
+
+	.box {
+		border: 2px solid #ccc;
+		padding: 20px;
+		position: relative;
+		margin-bottom: 30px;
+		border-radius: 8px;
+	}
+
+	.legend-label {
+		font-size: 1.2rem;
+		font-weight: bold;
+		color: #007bff;
+		position: relative;
+		top: -15px;
+		left: 15px;
+		background-color: white;
+		padding: 0 10px;
+	}
+
+	.form-control {
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1rem;
+	}
+
+	.btn-primary {
+		background-color: #007bff;
+		border-color: #007bff;
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1.2rem;
+	}
+
+	.btn-primary:hover {
+		background-color: #0056b3;
+		border-color: #004085;
+	}
+	span {
+		color: red;
+	}
+</style>
+
+{% endblock %}
+
+-----------------------------------
+
+Contents of ./theProject/templates/welcome.html:
+{% extends 'base.html' %} {% block content %}
+<div class="welcome-section text-center">
+	<h1 class="display-4">Welcome to the Purrfect Cat Community</h1>
+	<p class="lead">Join us to discover and reserve your next feline friend!</p>
+	<p class="lead">
+		Whether you’re looking for a playful kitten or a calm senior cat, we've
+		got the purrfect companion for you.
+	</p>
+
+	<a href="/register" class="btn btn-primary btn-lg mx-2">Join Us Today</a>
+	<a href="/login" class="btn btn-secondary btn-lg mx-2">Log In</a>
+
+	<hr class="my-4" />
+
+	<p>Already have an account? Log in to see the latest arrivals!</p>
+	<p>
+		New here? Register now to explore our full gallery of lovable cats
+		waiting for a forever home.
+	</p>
+</div>
+{% endblock %}
+
+-----------------------------------
+
+Contents of ./theProject/__init__.py:
+from os import path
+
+from flask import Flask
+from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
+DB_NAME = "database.db"
+
+from theProject.models import User, Cat
+
+def create_app():
+    app = Flask(__name__)
+    app.config["SECRET_KEY"] = "your_secret_key"
+    app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
+
+    db.init_app(app)
+    
+    from theProject.main import main as main_blueprint
+
+    app.register_blueprint(main_blueprint)
+    
+    from theProject.auth import auth as auth_blueprint
+
+    app.register_blueprint(auth_blueprint)
+    
+    create_database(app)
+    
+    login_manager = LoginManager()
+    login_manager.login_view = "auth.login"
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+
+    return app
+
+def create_database(app):
+    if not path.exists("theProject/" + DB_NAME):
+        with app.app_context():
+            db.create_all()
+        print("Created Database!")
+
+-----------------------------------

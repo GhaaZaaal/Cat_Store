@@ -10,13 +10,12 @@ class Cat(db.Model):
     name = db.Column(db.String(50), nullable=False)
     color = db.Column(db.String(20), nullable=False)
     eye_color = db.Column(db.String(20), nullable=False)
-    age = db.Column(
-        db.String(20), nullable=False
-    )  # Example: 'kitten', 'adult', 'senior'
-    gender = db.Column(db.String(10), nullable=False)  # 'male' or 'female'
+    age = db.Column(db.String(20), nullable=False)
+    gender = db.Column(db.String(10), nullable=False)
     price = db.Column(db.String(10), nullable=False)
     reserved = db.Column(db.Boolean, default=False)
-    image = db.Column(db.String(100), nullable=False)  # Path to the image file
+    reserved_by = db.Column(db.Integer, nullable=True)
+    image = db.Column(db.String(100), nullable=False)
 
     def __repr__(self):
         return f"<Cat {self.name}>"
