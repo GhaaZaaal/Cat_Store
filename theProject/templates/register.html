@@ -5,6 +5,7 @@
 	<p class="lead mb-5">Sign up with your details below</p>
 
 	<form method="POST" class="mx-auto" style="max-width: 600px">
+		<input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
 		<!-- Email -->
 		<fieldset class="form-group box">
 			<legend class="legend-label">Email Address <span>*</span></legend>

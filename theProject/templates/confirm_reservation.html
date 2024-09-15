@@ -37,6 +37,11 @@
 					action="{{ url_for('auth.confirm_Reservation', cat_id=cat.id) }}"
 					method="POST"
 				>
+					<input
+						type="hidden"
+						name="csrf_token"
+						value="{{ csrf_token() }}"
+					/>
 					{% if button_disabled %}
 					<button
 						type="button"
