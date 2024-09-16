@@ -22,41 +22,109 @@
 					<strong>Price:</strong>
 					<span class="price">${{ cat.price }}</span>
 				</p>
-				<p><strong>Status:</strong> Reserved</p>
+				<p>
+					<strong>Status:</strong>
+					{% if cat.reserved_by %} Reserved {% else %} Available {%
+					endif %}
+				</p>
 			</div>
-			<div class="confirmation-message mt-4">
-				{% with messages = get_flashed_messages(with_categories=True) %}
-				{% if messages %}
-				<div class="alert alert-success" role="alert">
-					{% for category, message in messages %} {{ message }} {%
-					endfor %}
-				</div>
-				{% endif %} {% endwith %}
 
-				<form
-					action="{{ url_for('auth.confirm_Reservation', cat_id=cat.id) }}"
-					method="POST"
+			<form
+				action="{{ url_for('auth.confirm_Reservation', cat_id=cat.id) }}"
+				method="POST"
+			>
+				{% if remaining_time %}
+				<div class="timer">
+					<p>
+						<strong>Time Remaining for Reservation:</strong>
+						<span id="timeLeft"></span>
+					</p>
+				</div>
+				<script>
+					// JavaScript to calculate the countdown from remaining time
+					const totalSeconds = {{ remaining_time.total_seconds() | int }};
+					let countdown = totalSeconds;
+
+					const timerElement = document.getElementById('timeLeft');
+					function updateTimer() {
+					    const days = Math.floor(countdown / (24 * 3600));
+					    const hours = Math.floor((countdown % (24 * 3600)) / 3600);
+					    const minutes = Math.floor((countdown % 3600) / 60);
+					    const seconds = countdown % 60;
+
+					    timerElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+					    if (countdown > 0) {
+					        countdown -= 1;
+					        setTimeout(updateTimer, 1000);
+					    } else {
+					        // If time runs out, refresh the page
+					        setTimeout(function() {
+					            location.reload();
+					        }, 1000);  // Refresh after 1 second
+					    }
+					}
+
+					updateTimer();
+				</script>
+				{% endif %}
+				<input
+					type="hidden"
+					name="csrf_token"
+					value="{{ csrf_token() }}"
+				/>
+				{% if button_disabled and not gallery %}
+				<button
+					type="button"
+					class="btn btn-success"
+					id="confirmButton"
+					disabled
 				>
-					{% if button_disabled %}
-					<button
-						type="button"
-						class="btn btn-success"
-						id="confirmButton"
-						disabled
-					>
-						Confirmed
-					</button>
-					{% else %}
-					<button
-						type="submit"
-						class="btn btn-success"
-						id="confirmButton"
-					>
-						Confirm
-					</button>
-					{% endif %}
-				</form>
-			</div>
+					Confirmed
+				</button>
+				<button type="submit" class="btn btn-danger" id="confirmButton">
+					Cancel
+				</button>
+				{% elif gallery %}
+				<button
+					type="submit"
+					class="btn btn-success"
+					id="confirmButton"
+				>
+					Confirm
+				</button>
+				<button
+					type="submit"
+					class="btn btn-success"
+					id="confirmButton"
+				>
+					<a href="{{ url_for('auth.gallery') }}">Gallery</a>
+				</button>
+				{% elif reserve_again %}
+				<button
+					type="submit"
+					class="btn btn-success"
+					id="confirmButton"
+				>
+					Reserve Again
+				</button>
+				<button
+					type="submit"
+					class="btn btn-success"
+					id="confirmButton"
+				>
+					<a href="{{ url_for('auth.gallery') }}">Gallery</a>
+				</button>
+				{% else %}
+				<button
+					type="submit"
+					class="btn btn-success"
+					id="confirmButton"
+				>
+					Confirm
+				</button>
+				{% endif %}
+			</form>
 		</div>
 	</div>
 </div>

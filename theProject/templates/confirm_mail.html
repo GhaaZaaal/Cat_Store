@@ -9,6 +9,7 @@
 		class="mx-auto"
 		style="max-width: 600px"
 	>
+		<input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
 		<!-- Email -->
 		<fieldset class="form-group box">
 			<legend class="legend-label">Email Address</legend>

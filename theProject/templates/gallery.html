@@ -60,26 +60,30 @@
 	<!-- Cat Gallery -->
 	<div class="cat-gallery mt-4">
 		{% for cat in cats %}
-		<div class="cat-item">
-			<a href="{{ url_for('auth.confirm_Reservation', cat_id=cat.id) }}">
+		<a href="{{ url_for('auth.confirm_Reservation', cat_id=cat.id) }}">
+			<div class="cat-item">
 				<img
 					class="cat-image"
 					src="{{ url_for('static', filename='cat-images/' + cat.image) }}"
 					alt="Cat Image {{ loop.index }}"
 					loading="lazy"
 				/>
-			</a>
-			<div class="cat-info">
-				<h2 class="cat-name">{{ cat.name }}</h2>
-				<p><span class="info-label">Color:</span> {{ cat.color }}</p>
-				<p>
-					<span class="info-label">Eye Color:</span> {{ cat.eye_color
-					}}
-				</p>
-				<p><span class="info-label">Age:</span> {{ cat.age }}</p>
-				<p><span class="info-label">Gender:</span> {{ cat.gender }}</p>
+				<div class="cat-info">
+					<h2 class="cat-name">{{ cat.name }}</h2>
+					<p>
+						<span class="info-label">Color:</span> {{ cat.color }}
+					</p>
+					<p>
+						<span class="info-label">Eye Color:</span> {{
+						cat.eye_color }}
+					</p>
+					<p><span class="info-label">Age:</span> {{ cat.age }}</p>
+					<p>
+						<span class="info-label">Gender:</span> {{ cat.gender }}
+					</p>
+				</div>
 			</div>
-		</div>
+		</a>
 		{% endfor %}
 	</div>
 </div>
@@ -87,6 +91,9 @@
 
 <!-- Custom CSS for gallery styling -->
 <style>
+	a:hover {
+		text-decoration: solid;
+	}
 	.gallery-container {
 		padding: 20px;
 	}

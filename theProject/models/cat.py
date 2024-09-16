@@ -1,4 +1,6 @@
 # cat.py ==> models
+from datetime import datetime
+
 from flask_login import UserMixin
 
 from .. import db
@@ -17,6 +19,9 @@ class Cat(db.Model):
     reserved = db.Column(db.Boolean, default=False)
     reserved_by = db.Column(db.Integer, nullable=True)
     image = db.Column(db.String(100), nullable=False)
+    reservation_time = db.Column(
+        db.DateTime, nullable=True
+    )  # Time when reservation was made
 
     def __repr__(self):
         return f"<Cat {self.name}>"

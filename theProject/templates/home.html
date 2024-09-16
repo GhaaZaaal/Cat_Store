@@ -7,6 +7,7 @@
 	</p>
 
 	<form method="POST" class="mx-auto" style="max-width: 600px">
+		<input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
 		<!-- Cat Color -->
 		<fieldset class="form-group box">
 			<legend class="legend-label">Favorite Cat Color</legend>

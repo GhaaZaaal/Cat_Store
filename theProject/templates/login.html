@@ -9,6 +9,7 @@
 
 	<!-- Login Form -->
 	<form method="POST" class="mx-auto" style="max-width: 400px" id="loginForm">
+		<input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
 		<!-- Email Field -->
 		<fieldset class="form-group box">
 			<legend class="legend-label">Email Address</legend>
@@ -45,11 +46,11 @@
 
 		<!-- Register Link -->
 		<a href="{{ url_for('auth.register') }}">
-			<p class="text-muted">Don't have an account yet?</p>
+			<span class="text-muted">Don't have an account yet?</span>
 		</a>
 
 		<a href="{{ url_for('auth.password_reset') }}">
-			<p class="text-muted">Forget Your Password?</p>
+			<span class="text-muted">Forget Your Password?</span>
 		</a>
 
 		<!-- Register Button (hidden initially) -->
