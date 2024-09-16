@@ -36,7 +36,7 @@ def confirm_Reservation(cat_id):
             flash(
                 f"Sorry! {{ cat.name }} is already reserved by another user, you can choose another one or just wait for.",
                 "error",
-            )-
+            )
 
     return render_template(
         "confirm_reservation.html",
