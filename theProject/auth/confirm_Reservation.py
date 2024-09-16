@@ -1,5 +1,7 @@
 # confrim_Reservation.py ==> auth
-from flask import flash, render_template, request
+from datetime import datetime, timedelta
+
+from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
 from .. import db
@@ -16,21 +18,17 @@ def confirm_Reservation(cat_id):
         if not current_user.reserved_cat and not cat.reserved_by:
             current_user.reserved_cat = cat.id
             cat.reserved_by = current_user.id
+            cat.reservation_time = datetime.now()
+            db.session.commit()
+
             flash(
-                f"Thank you for your reservation!\n\n\n\n\n\n{ cat.name } is now waiting for you at our store.\nYou can visit us at Alexandria, Egypt.\nWe are open from [10:00 AM To 5:00 PM].\nFor any inquiries, please call us at (01010101010).",
+                f"Thank you for your reservation! { cat.name } is now waiting for you at our store for '3 Days'. You can visit us at Alexandria, Egypt. We are open from [10:00 AM To 5:00 PM]. For any inquiries, please call us at (01010101010).",
                 "success",
             )
-            db.session.commit()
-            return render_template(
-                "confirm_reservation.html",
-                title="Cat Store - Confirm Reservation",
-                cat=cat,
-                button_disabled=True,
-                gallery=False,
-            )
+            return redirect(url_for("auth.confirm_Reservation", cat_id=cat.id))
         elif not current_user.reserved_cat and cat.reserved_by:
             flash(
-                f"Sorry! { cat.name } is already reserved by another user, you can choose another one for now\nOr just wait for our 'NEW COLLECTION' soon!.",
+                f"Sorry! { cat.name } is already reserved by another user, you can choose another one for now Or just wait for our 'NEW COLLECTION' soon!.",
                 "error",
             )
             return render_template(
@@ -40,6 +38,12 @@ def confirm_Reservation(cat_id):
                 gallery=True,
             )
         elif current_user.reserved_cat:
+            reserved_cat = Cat.query.get_or_404(current_user.reserved_cat)
+            if reserved_cat.reservation_time:
+                reservation_expiration = reserved_cat.reservation_time + timedelta(
+                    seconds=10
+                )
+                remaining_time = reservation_expiration - datetime.now()
             if not cat.reserved_by:
                 cat = Cat.query.get_or_404(current_user.reserved_cat)
                 flash(
@@ -48,14 +52,15 @@ def confirm_Reservation(cat_id):
                 )
                 return render_template(
                     "confirm_reservation.html",
-                    title="Cat Store - Confirm Reservation",
                     cat=cat,
                     button_disabled=True,
+                    remaining_time=remaining_time,
                 )
             else:
                 if current_user.reserved_cat == cat.id:
                     current_user.reserved_cat = None
                     cat.reserved_by = None
+                    cat.reservation_time = None
                     db.session.commit()
                     flash(
                         f"Your Reservation for { cat.name } had been canceled!",
@@ -66,6 +71,7 @@ def confirm_Reservation(cat_id):
                         title="Cat Store - Confirm Reservation",
                         cat=cat,
                         button_disabled=False,
+                        remaining_time=remaining_time,
                         gallery=True,
                     )
                 else:
@@ -95,21 +101,46 @@ def confirm_Reservation(cat_id):
             button_disabled=False,
             gallery=True,
         )
-    elif current_user.reserved_cat and not cat.reserved_by:
-        return render_template(
-            "confirm_reservation.html",
-            title="Cat Store - Confirm Reservation",
-            cat=cat,
-            button_disabled=False,
-        )
-    elif current_user.reserved_cat and cat.reserved_by:
-        if current_user.reserved_cat == cat.id:
-            return render_template(
-                "confirm_reservation.html",
-                title="Cat Store - Confirm Reservation",
-                cat=cat,
-                button_disabled=True,
+    elif current_user.reserved_cat:
+        reserved_cat = Cat.query.get_or_404(current_user.reserved_cat)
+        if reserved_cat.reservation_time:
+            reservation_expiration = reserved_cat.reservation_time + timedelta(
+                seconds=10
             )
+            remaining_time = reservation_expiration - datetime.now()
+        if cat.reserved_by:
+            if current_user.reserved_cat == cat.id:
+                if remaining_time.total_seconds() > 0:
+                    return render_template(
+                        "confirm_reservation.html",
+                        cat=cat,
+                        button_disabled=True,
+                        remaining_time=remaining_time,
+                    )
+                else:
+                    current_user.reserved_cat = None
+                    cat.reserved_by = None
+                    cat.reservation_time = None
+                    db.session.commit()
+                    flash(
+                        f"Your Reservation for { cat.name } had been Expired!",
+                        "error",
+                    )
+                    return render_template(
+                        "confirm_reservation.html",
+                        title="Cat Store - Confirm Reservation",
+                        cat=cat,
+                        button_disabled=False,
+                        reserve_again=True,
+                    )
+            else:
+                return render_template(
+                    "confirm_reservation.html",
+                    title="Cat Store - Confirm Reservation",
+                    cat=cat,
+                    button_disabled=False,
+                    gallery=True,
+                )
         else:
             return render_template(
                 "confirm_reservation.html",
