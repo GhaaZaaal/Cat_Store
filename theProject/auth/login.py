@@ -18,7 +18,10 @@ def login():
         if user and check_password_hash(user.password, password):
             login_user(user, remember=True)
             flash("Welcome back! You've successfully logged in.", "success")
-            return redirect(url_for("auth.homePage"))
+            if user.reserved_cat:
+                return redirect(url_for("auth.confirm_Reservation", cat_id=user.reserved_cat))
+            else:
+                return redirect(url_for("auth.homePage"))
         else:
             flash(
                 "Oops! The email or password you entered is incorrect. Please try again.",
