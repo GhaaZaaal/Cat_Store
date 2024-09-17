@@ -59,7 +59,7 @@ if __name__ == "__main__":
         ("Gizmo", "White", "Yellow", "senior", "Male", "110", "31.jpg"),
         ("Peanut", "Mix", "Yellow", "senior", "Female", "130", "32.jpg"),
         ("Obama", "White", "Blue", "adult", "Male", "180", "33.jpg"),
-        ("Shadow", "Orange", "Yellow", "kitten", "Male", "210", "34.jpg"),
+        ("Shetos", "Orange", "Yellow", "kitten", "Male", "210", "34.jpg"),
         ("Oliver", "White", "Blue", "adult", "Male", "180", "35.jpg"),
     ]
 

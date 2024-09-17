@@ -45,45 +45,64 @@ def confirm_Reservation(cat_id):
                 )
                 remaining_time = reservation_expiration - datetime.now()
             if not cat.reserved_by:
-                cat = Cat.query.get_or_404(current_user.reserved_cat)
-                flash(
-                    f"You have already reserved { cat.name }",
-                    "error",
-                )
-                return render_template(
-                    "confirm_reservation.html",
-                    cat=cat,
-                    button_disabled=True,
-                    remaining_time=remaining_time,
-                )
-            else:
-                if current_user.reserved_cat == cat.id:
-                    current_user.reserved_cat = None
-                    cat.reserved_by = None
-                    cat.reservation_time = None
-                    db.session.commit()
-                    flash(
-                        f"Your Reservation for { cat.name } had been canceled!",
-                        "error",
-                    )
-                    return render_template(
-                        "confirm_reservation.html",
-                        title="Cat Store - Confirm Reservation",
-                        cat=cat,
-                        button_disabled=False,
-                        remaining_time=remaining_time,
-                        gallery=True,
-                    )
-                else:
+                if remaining_time.total_seconds() > 0:
+                    cat = Cat.query.get_or_404(current_user.reserved_cat)
                     flash(
                         f"You have already reserved { cat.name }",
                         "error",
                     )
                     return render_template(
                         "confirm_reservation.html",
-                        title="Cat Store - Confirm Reservation",
                         cat=cat,
-                        button_disabled=True,
+                        confirmed=True,
+                        remaining_time=remaining_time,
+                    )
+                else:
+                    current_user.reserved_cat = None
+                    reserved_cat.reserved_by = None
+                    reserved_cat.reservation_time = None
+                    db.session.commit()
+                    flash(
+                        f"Your Reservation for { reserved_cat.name } had been Expired!",
+                        "error",
+                    )
+                    return redirect(url_for("auth.confirm_Reservation", cat_id=cat.id))
+            else:
+                if remaining_time.total_seconds() > 0:
+                    if current_user.reserved_cat == cat.id:
+                        current_user.reserved_cat = None
+                        cat.reserved_by = None
+                        cat.reservation_time = None
+                        db.session.commit()
+                        flash(
+                            f"Your Reservation for { cat.name } had been canceled!",
+                            "error",
+                        )
+                        return render_template(
+                            "confirm_reservation.html",
+                            title="Cat Store - Confirm Reservation",
+                            cat=cat,
+                            confirmed=False,
+                            remaining_time=False,
+                            reserve_again=True,
+                            gallery=True,
+                        )
+                else:
+                    current_user.reserved_cat = None
+                    reserved_cat.reserved_by = None
+                    reserved_cat.reservation_time = None
+                    db.session.commit()
+                    flash(
+                        f"Your Reservation for { reserved_cat.name } had been Expired!",
+                        "error",
+                    )
+
+                    return render_template(
+                        "confirm_reservation.html",
+                        title="Cat Store - Confirm Reservation",
+                        cat=reserved_cat,
+                        reserve_again=True,
+                        remaining_time=False,
                     )
 
     if not current_user.reserved_cat and not cat.reserved_by:
@@ -91,15 +110,14 @@ def confirm_Reservation(cat_id):
             "confirm_reservation.html",
             title="Cat Store - Confirm Reservation",
             cat=cat,
-            button_disabled=False,
+            confirmed=False,
         )
     elif not current_user.reserved_cat and cat.reserved_by:
         return render_template(
             "confirm_reservation.html",
             title="Cat Store - Confirm Reservation",
             cat=cat,
-            button_disabled=False,
-            gallery=True,
+            confirmed=False,
         )
     elif current_user.reserved_cat:
         reserved_cat = Cat.query.get_or_404(current_user.reserved_cat)
@@ -109,15 +127,23 @@ def confirm_Reservation(cat_id):
             )
             remaining_time = reservation_expiration - datetime.now()
         if cat.reserved_by:
-            if current_user.reserved_cat == cat.id:
-                if remaining_time.total_seconds() > 0:
+            if remaining_time.total_seconds() > 0:
+                if current_user.reserved_cat == cat.id:
                     return render_template(
                         "confirm_reservation.html",
                         cat=cat,
-                        button_disabled=True,
+                        confirmed=True,
                         remaining_time=remaining_time,
                     )
                 else:
+                    return render_template(
+                        "confirm_reservation.html",
+                        title="Cat Store - Confirm Reservation",
+                        cat=cat,
+                        confirmed=False,
+                    )
+            else:
+                if current_user.reserved_cat == cat.id:
                     current_user.reserved_cat = None
                     cat.reserved_by = None
                     cat.reservation_time = None
@@ -130,21 +156,39 @@ def confirm_Reservation(cat_id):
                         "confirm_reservation.html",
                         title="Cat Store - Confirm Reservation",
                         cat=cat,
-                        button_disabled=False,
                         reserve_again=True,
+                        gallery=True,
+                        remaining_time=False,
                     )
-            else:
+                else:
+                    return render_template(
+                        "confirm_reservation.html",
+                        title="Cat Store - Confirm Reservation",
+                        cat=cat,
+                        confirmed=False,
+                        gallery=False,
+                        remaining_time=False,
+                    )
+        elif not cat.reserved_by:
+            if remaining_time.total_seconds() > 0:
                 return render_template(
                     "confirm_reservation.html",
                     title="Cat Store - Confirm Reservation",
                     cat=cat,
-                    button_disabled=False,
-                    gallery=True,
+                    confirmed=False,
                 )
-        else:
-            return render_template(
-                "confirm_reservation.html",
-                title="Cat Store - Confirm Reservation",
-                cat=cat,
-                button_disabled=False,
-            )
+            else:
+                current_user.reserved_cat = None
+                reserved_cat.reserved_by = None
+                reserved_cat.reservation_time = None
+                db.session.commit()
+                flash(
+                    f"Your Reservation for { reserved_cat.name } had been Expired!",
+                    "error",
+                )
+                return render_template(
+                    "confirm_reservation.html",
+                    title="Cat Store - Confirm Reservation",
+                    cat=cat,
+                    confirmed=False,
+                )

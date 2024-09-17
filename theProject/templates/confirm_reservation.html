@@ -4,16 +4,19 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-6 text-center">
-			<img
-				src="{{ url_for('static', filename='cat-images/' + cat.image) }}"
-				alt="{{ cat.name }}"
-				class="img-fluid cat-image"
-			/>
+		<div class="col-md-5 text-center">
+			<div class="card cat-card">
+				<img
+					class="img-fluid cat-image"
+					src="{{ url_for('static', filename='cat-images/' + cat.image) }}"
+					alt="Cat Image {{ cat.name }}"
+					loading="lazy"
+				/>
+			</div>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-5">
 			<div class="cat-details">
-				<p><strong>Cat Name:</strong> {{ cat.name }}</p>
+				<h3 class="cat-name">{{ cat.name }}</h3>
 				<p><strong>Color:</strong> {{ cat.color }}</p>
 				<p><strong>Eye Color:</strong> {{ cat.eye_color }}</p>
 				<p><strong>Age:</strong> {{ cat.age }}</p>
@@ -23,20 +26,20 @@
 					<span class="price">${{ cat.price }}</span>
 				</p>
 				<p>
-					<strong>Status:</strong>
-					{% if cat.reserved_by %} Reserved {% else %} Available {%
-					endif %}
+					<strong>Status:</strong> {% if cat.reserved_by %} Reserved
+					{% else %} Available {% endif %}
 				</p>
 			</div>
-
+			<br />
 			<form
+				class="confirm-details"
 				action="{{ url_for('auth.confirm_Reservation', cat_id=cat.id) }}"
 				method="POST"
 			>
 				{% if remaining_time %}
 				<div class="timer">
 					<p>
-						<strong>Time Remaining for Reservation:</strong>
+						<strong>Reservation Time Remaining:</strong>
 						<span id="timeLeft"></span>
 					</p>
 				</div>
@@ -73,7 +76,8 @@
 					name="csrf_token"
 					value="{{ csrf_token() }}"
 				/>
-				{% if button_disabled and not gallery %}
+
+				{% if confirmed and not gallery %}
 				<button
 					type="button"
 					class="btn btn-success"
@@ -82,39 +86,35 @@
 				>
 					Confirmed
 				</button>
-				<button type="submit" class="btn btn-danger" id="confirmButton">
+				<button type="submit" class="btn btn-danger" id="cancelButton">
 					Cancel
-				</button>
-				{% elif gallery %}
-				<button
-					type="submit"
-					class="btn btn-success"
-					id="confirmButton"
-				>
-					Confirm
-				</button>
-				<button
-					type="submit"
-					class="btn btn-success"
-					id="confirmButton"
-				>
-					<a href="{{ url_for('auth.gallery') }}">Gallery</a>
 				</button>
 				{% elif reserve_again %}
 				<button
 					type="submit"
 					class="btn btn-success"
-					id="confirmButton"
+					id="reserveAgainButton"
 				>
 					Reserve Again
 				</button>
+				<a
+					href="{{ url_for('auth.gallery') }}"
+					class="btn btn-outline-secondary"
+					>Gallery</a
+				>
+				{% elif gallery %}
 				<button
 					type="submit"
-					class="btn btn-success"
+					class="btn btn-primary"
 					id="confirmButton"
 				>
-					<a href="{{ url_for('auth.gallery') }}">Gallery</a>
+					Confirm
 				</button>
+				<a
+					href="{{ url_for('auth.gallery') }}"
+					class="btn btn-outline-secondary"
+					>Gallery</a
+				>
 				{% else %}
 				<button
 					type="submit"
@@ -130,29 +130,119 @@
 </div>
 
 <style>
+	body {
+		background: #f8f9fa;
+		font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	}
+
+	.container {
+		margin-top: 20px;
+	}
+
+	.cat-card {
+		box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+		border-radius: 15px;
+		overflow: hidden;
+		margin-bottom: 20px;
+		background: #ffffff;
+		transition: box-shadow 0.3s ease;
+	}
+
+	.cat-card:hover {
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	}
+
 	.cat-image {
-		max-width: 100%;
+		width: 100%;
 		height: auto;
-		border-radius: 8px;
+		max-height: 300px; /* Adjust this value as needed */
+		object-fit: cover;
+		transition: transform 0.3s ease;
+		border-radius: 15px;
+	}
+
+	.cat-image:hover {
+		transform: scale(1.05);
+	}
+
+	.cat-details {
+		font-size: 1rem;
+		padding: 20px;
+		background: #ffffff;
+		border-radius: 15px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	}
+	.confirm-details {
+		font-size: 1rem;
+		padding: 20px;
+		background: #ffffff;
+		border-radius: 15px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	}
+
+	.cat-name {
+		font-size: 1.8rem;
+		margin-bottom: 10px;
+		color: #333;
 	}
 
 	.price {
-		font-size: 1.5rem;
+		font-size: 1.4rem;
 		color: #28a745;
 		font-weight: bold;
 	}
 
-	.cat-details p {
+	.btn {
+		border-radius: 25px;
+		padding: 10px 20px;
+		font-size: 1rem;
+		text-transform: uppercase;
+	}
+
+	.btn-primary {
+		background-color: #007bff;
+		border: none;
+		color: #ffffff;
+	}
+
+	.btn-primary:hover {
+		background-color: #0056b3;
+	}
+
+	.btn-success {
+		background-color: #28a745;
+		border: none;
+		color: #ffffff;
+	}
+
+	.btn-success:hover {
+		background-color: #1e7e34;
+	}
+
+	.btn-danger {
+		background-color: #dc3545;
+		border: none;
+		color: #ffffff;
+	}
+
+	.btn-danger:hover {
+		background-color: #c82333;
+	}
+
+	.btn-outline-secondary {
+		border-color: #6c757d;
+		color: #6c757d;
+	}
+
+	.btn-outline-secondary:hover {
+		background-color: #6c757d;
+		color: #ffffff;
+	}
+
+	.timer p {
 		font-size: 1.2rem;
-		margin-bottom: 0.5rem;
-	}
-
-	.confirmation-message {
-		margin-top: 20px;
-	}
-
-	#confirmButton {
-		width: 100%;
+		color: #333;
 	}
 </style>
+
 {% endblock %}
