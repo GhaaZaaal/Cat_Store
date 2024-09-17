@@ -66,12 +66,12 @@ def confirm_Reservation(cat_id):
                         f"Your Reservation for { cat.name } had been canceled!",
                         "error",
                     )
+                    print("holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
                     return render_template(
                         "confirm_reservation.html",
                         title="Cat Store - Confirm Reservation",
                         cat=cat,
                         button_disabled=False,
-                        remaining_time=remaining_time,
                         gallery=True,
                     )
                 else:
@@ -79,11 +79,18 @@ def confirm_Reservation(cat_id):
                         f"You have already reserved { cat.name }",
                         "error",
                     )
+                    if remaining_time.total_seconds() > 0:
+                        send_time = remaining_time
+                    else:
+                        send_time = 0
+
                     return render_template(
                         "confirm_reservation.html",
                         title="Cat Store - Confirm Reservation",
                         cat=cat,
                         button_disabled=True,
+                        remaining_time=send_time,
+                        gallery=False,
                     )
 
     if not current_user.reserved_cat and not cat.reserved_by:
@@ -108,30 +115,39 @@ def confirm_Reservation(cat_id):
                 seconds=10
             )
             remaining_time = reservation_expiration - datetime.now()
-        if cat.reserved_by:
-            if current_user.reserved_cat == cat.id:
-                if remaining_time.total_seconds() > 0:
-                    return render_template(
-                        "confirm_reservation.html",
-                        cat=cat,
-                        button_disabled=True,
-                        remaining_time=remaining_time,
-                    )
+            if cat.reserved_by:
+                if current_user.reserved_cat == cat.id:
+                    if remaining_time.total_seconds() > 0:
+                        return render_template(
+                            "confirm_reservation.html",
+                            cat=cat,
+                            button_disabled=True,
+                            remaining_time=remaining_time,
+                            gallery=False,
+                        )
+                    else:
+                        current_user.reserved_cat = None
+                        cat.reserved_by = None
+                        cat.reservation_time = None
+                        db.session.commit()
+                        flash(
+                            f"Your Reservation for { cat.name } had been Expired!",
+                            "error",
+                        )
+                        return render_template(
+                            "confirm_reservation.html",
+                            title="Cat Store - Confirm Reservation",
+                            cat=cat,
+                            button_disabled=False,
+                            reserve_again=True,
+                        )
                 else:
-                    current_user.reserved_cat = None
-                    cat.reserved_by = None
-                    cat.reservation_time = None
-                    db.session.commit()
-                    flash(
-                        f"Your Reservation for { cat.name } had been Expired!",
-                        "error",
-                    )
                     return render_template(
                         "confirm_reservation.html",
                         title="Cat Store - Confirm Reservation",
                         cat=cat,
                         button_disabled=False,
-                        reserve_again=True,
+                        gallery=True,
                     )
             else:
                 return render_template(
@@ -139,12 +155,4 @@ def confirm_Reservation(cat_id):
                     title="Cat Store - Confirm Reservation",
                     cat=cat,
                     button_disabled=False,
-                    gallery=True,
                 )
-        else:
-            return render_template(
-                "confirm_reservation.html",
-                title="Cat Store - Confirm Reservation",
-                cat=cat,
-                button_disabled=False,
-            )
