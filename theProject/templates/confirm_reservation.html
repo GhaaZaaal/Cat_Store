@@ -40,7 +40,7 @@
 				<div class="timer">
 					<p>
 						<strong>Reservation Time Remaining:</strong>
-						<span id="timeLeft"></span>
+						<p id="timeLeft" style="text-align: center;"></p>
 					</p>
 				</div>
 				<script>
@@ -53,8 +53,9 @@
 					    const days = Math.floor(countdown / (24 * 3600));
 					    const hours = Math.floor((countdown % (24 * 3600)) / 3600);
 					    const minutes = Math.floor((countdown % 3600) / 60);
+					    const seconds = countdown % 60;
 
-					    timerElement.textContent = `${days}d ${hours}h ${minutes}m`;
+					    timerElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
 					    if (countdown > 0) {
 					        countdown -= 1;
