@@ -41,7 +41,7 @@ def confirm_Reservation(cat_id):
             reserved_cat = Cat.query.get_or_404(current_user.reserved_cat)
             if reserved_cat.reservation_time:
                 reservation_expiration = reserved_cat.reservation_time + timedelta(
-                    seconds=10
+                    days=3
                 )
                 remaining_time = reservation_expiration - datetime.now()
             if not cat.reserved_by:
@@ -122,9 +122,7 @@ def confirm_Reservation(cat_id):
     elif current_user.reserved_cat:
         reserved_cat = Cat.query.get_or_404(current_user.reserved_cat)
         if reserved_cat.reservation_time:
-            reservation_expiration = reserved_cat.reservation_time + timedelta(
-                seconds=10
-            )
+            reservation_expiration = reserved_cat.reservation_time + timedelta(days=3)
             remaining_time = reservation_expiration - datetime.now()
         if cat.reserved_by:
             if remaining_time.total_seconds() > 0:

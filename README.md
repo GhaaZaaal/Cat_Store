@@ -54,7 +54,7 @@ The **Cat** table in the database stores the following attributes:
 Each cat in the database is dynamically linked with its image and reservation status.
 
 <p>
-<img align="center" title="Gallery" alt="Gallery Preview" width="80%" src="./theProject/static/readme-images/3.png" style="padding-right:10px;" />
+<img title="Gallery" alt="Gallery Preview" width="80%" src="./theProject/static/readme-images/1.png" style="padding-right:10px;" />
 </p>
 
 </details>
@@ -73,6 +73,9 @@ To enhance user experience:
 -   **Click-to-Reserve**: When a user clicks on an image, they are taken to the confirm reservation page with the selected cat's details.
 <p>
 <img align="center" title="Gallery" alt="Gallery Preview" width="80%" src="./theProject/static/readme-images/3.png" style="padding-right:10px;" />
+</p>
+<p>
+<img align="center" title="Gallery" alt="Gallery Preview" width="80%" src="./theProject/static/readme-images/4.png" style="padding-right:10px;" />
 </p>
 
 ### 🛠 Setup Instructions
