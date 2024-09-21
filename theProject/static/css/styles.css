@@ -1,131 +1,187 @@
-/* styles.css ==> static/css */
-/* General Body Styling */
+/* Global Styles - styles.css */
+
+/* 1. Font and Typography */
 body {
-	background-color: #f1f3f6;
-	font-family: "Roboto", sans-serif;
-	color: #333;
+	font-family: "Arial", sans-serif; /* A globally available font */
+	background-color: #f9f9f9; /* Light background to make the content pop */
+	color: #333; /* Dark text for readability */
 	margin: 0;
 	padding: 0;
+	line-height: 1.6;
 }
 
-/* Page Header */
-h1 {
-	font-size: 2.5rem;
-	color: #2e8b57;
-	text-align: center;
-	margin: 40px 0;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: #333; /* Consistent text color for headings */
+	margin-bottom: 15px;
 	font-weight: 700;
 }
 
-/* Filter Form Styling */
-form {
-	background-color: #fff;
-	padding: 20px;
-	border-radius: 10px;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+p {
+	margin-bottom: 15px;
+}
+
+/* 2. Color Palette */
+:root {
+	--primary-color: #4a90e2; /* Blue primary color */
+	--secondary-color: #ff7f50; /* Coral secondary color */
+	--accent-color: #28a745; /* Green accent color */
+	--text-color: #333; /* Standard text color */
+	--background-color: #f9f9f9; /* Light background color */
+	--border-color: #e0e0e0; /* Light grey for borders */
+}
+
+/* 3. Global Spacing */
+.container {
+	padding-left: 15px;
+	padding-right: 15px;
+	margin: 0 auto;
+}
+
+.section {
+	padding: 60px 0;
+}
+
+.mb-4 {
+	margin-bottom: 30px;
+}
+
+.mt-4 {
+	margin-top: 30px;
+}
+
+.row {
 	display: flex;
-	justify-content: center;
-	gap: 15px;
 	flex-wrap: wrap;
-	max-width: 900px;
-	margin: 0 auto 40px;
+	margin-right: -15px;
+	margin-left: -15px;
 }
 
-form label {
-	font-weight: 500;
-	color: #333;
+.col {
+	padding-left: 15px;
+	padding-right: 15px;
 }
 
-form select {
-	padding: 10px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	background-color: #fff;
-}
-
-form button {
-	background-color: #4a90e2;
-	color: #fff;
-	border: none;
+/* 4. Global Buttons */
+button,
+.btn {
+	display: inline-block;
+	font-weight: 600;
+	color: white;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	border: 2px solid transparent;
 	padding: 10px 20px;
 	border-radius: 5px;
-	font-size: 16px;
-	cursor: pointer;
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-	transition: background 0.3s ease, box-shadow 0.3s ease;
+	transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-form button:hover {
-	background-color: #357abd;
+button:hover,
+.btn:hover {
+	background-color: var(--primary-color);
+	border-color: var(--primary-color);
 }
 
-/* Cat Gallery Styling */
-.cat-gallery {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr); /* 3 columns per row */
-	gap: 20px;
-	padding: 20px;
-	max-width: 1200px;
-	margin: auto;
+.btn-primary {
+	background-color: var(--primary-color);
+	border-color: var(--primary-color);
 }
 
-/* Individual Cat Card */
-.cat-item {
-	background-color: #fff;
-	border-radius: 12px;
-	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-	overflow: hidden;
-	transition: transform 0.3s ease, box-shadow 0.3s ease;
+.btn-secondary {
+	background-color: var(--secondary-color);
+	border-color: var(--secondary-color);
 }
 
-.cat-item:hover {
-	transform: translateY(-5px);
-	box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+.btn-success {
+	background-color: var(--accent-color);
+	border-color: var(--accent-color);
 }
 
-/* Cat Image Styling */
-.cat-image {
+.btn-danger {
+	background-color: #dc3545;
+	border-color: #dc3545;
+}
+
+/* 5. Global Forms */
+input,
+select,
+textarea {
 	width: 100%;
-	height: 200px;
-	object-fit: cover;
+	padding: 12px;
+	border: 1px solid var(--border-color);
+	border-radius: 5px;
+	font-size: 16px;
+	color: var(--text-color);
+	margin-bottom: 15px;
 }
 
-/* Cat Info Section */
-.cat-info {
-	padding: 15px;
-	text-align: left;
+input:focus,
+select:focus,
+textarea:focus {
+	border-color: var(--primary-color);
+	outline: none;
+	box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
 }
 
-.cat-name {
-	font-size: 1.4rem;
-	font-weight: 700;
-	margin-bottom: 10px;
-	color: #333;
-}
-
-.cat-info p {
-	margin: 5px 0;
-	font-size: 1rem;
-	color: #666;
-}
-
-.cat-info p span {
+label {
 	font-weight: 600;
-	color: #333;
+	margin-bottom: 8px;
 }
 
-/* Mobile Responsiveness */
+/* 6. Navbar */
+.navbar {
+	background-color: var(--primary-color);
+	padding: 10px 15px;
+}
+
+.navbar a {
+	color: white;
+	text-decoration: none;
+	padding: 10px 15px;
+}
+
+.navbar a:hover {
+	background-color: var(--secondary-color);
+	color: white;
+	text-decoration: none;
+}
+
+/* 7. Footer */
+footer {
+	background-color: var(--primary-color);
+	padding: 20px 0;
+	color: white;
+	text-align: center;
+}
+
+footer h2 {
+	font-size: 1.8rem;
+	margin-bottom: 15px;
+}
+
+footer p {
+	font-size: 1rem;
+	margin: 0;
+}
+
+/* 8. Responsive Layout */
 @media (max-width: 768px) {
-	.cat-gallery {
-		grid-template-columns: 1fr; /* 1 column per row on small screens */
+	.container {
+		padding: 10px;
 	}
-}
 
-@media (min-width: 769px) and (max-width: 1024px) {
-	.cat-gallery {
-		grid-template-columns: repeat(
-			2,
-			1fr
-		); /* 2 columns per row on medium screens */
+	.row {
+		flex-direction: column;
+	}
+
+	button,
+	.btn {
+		width: 100%;
+		margin-bottom: 10px;
 	}
 }

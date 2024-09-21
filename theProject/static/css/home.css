@@ -1,0 +1,50 @@
+.box {
+	border: 2px solid #ccc;
+	padding: 20px;
+	position: relative;
+	margin-bottom: 30px;
+	border-radius: 8px;
+}
+.legend-label {
+	font-size: 1.2rem;
+	font-weight: bold;
+	color: #007bff;
+	position: absolute;
+	top: -15px;
+	left: 15px;
+	background-color: white;
+	padding: 0 10px;
+}
+.btn-group-toggle {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+}
+.btn-group-toggle .btn {
+	flex: 1;
+	margin-right: 5px;
+}
+.btn-group-toggle .btn input[type="radio"] {
+	position: absolute;
+	opacity: 0;
+}
+.btn-group-toggle .btn.active {
+	background-color: #007bff;
+	color: white;
+}
+.btn-group-toggle .btn-outline-primary.active {
+	background-color: #007bff;
+	color: white;
+}
+.btn-group-toggle .btn-outline-info.active {
+	background-color: #17a2b8;
+	color: white;
+}
+.btn-group-toggle .btn-outline-success.active {
+	background-color: #28a745;
+	color: white;
+}
+.btn-group-toggle .btn-outline-warning.active {
+	background-color: #ffc107;
+	color: white;
+}

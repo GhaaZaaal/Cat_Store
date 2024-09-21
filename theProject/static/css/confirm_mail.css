@@ -1,0 +1,44 @@
+.register-section {
+	margin-top: 30px;
+}
+
+.box {
+	border: 2px solid #ccc;
+	padding: 20px;
+	position: relative;
+	margin-bottom: 30px;
+	border-radius: 8px;
+}
+
+.legend-label {
+	font-size: 1.2rem;
+	font-weight: bold;
+	color: #007bff;
+	position: relative;
+	top: -15px;
+	left: 15px;
+	background-color: white;
+	padding: 0 10px;
+}
+
+.form-control {
+	border-radius: 8px;
+	padding: 12px;
+	font-size: 1rem;
+}
+
+.btn-primary {
+	background-color: #007bff;
+	border-color: #007bff;
+	border-radius: 8px;
+	padding: 12px;
+	font-size: 1.2rem;
+}
+
+.btn-primary:hover {
+	background-color: #0056b3;
+	border-color: #004085;
+}
+span {
+	color: red;
+}

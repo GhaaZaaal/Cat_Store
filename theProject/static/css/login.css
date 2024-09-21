@@ -1,0 +1,48 @@
+	.login-section {
+		margin-top: 50px;
+	}
+
+	.box {
+		border: 2px solid #ccc;
+		padding: 20px;
+		position: relative;
+		margin-bottom: 30px;
+		border-radius: 8px;
+	}
+
+	.legend-label {
+		font-size: 1.2rem;
+		font-weight: bold;
+		color: #007bff;
+		position: absolute;
+		top: -15px;
+		left: 15px;
+		background-color: white;
+		padding: 0 10px;
+	}
+
+	.form-control {
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1rem;
+	}
+
+	.btn-block {
+		border-radius: 8px;
+		padding: 12px;
+		font-size: 1.2rem;
+	}
+
+	.btn-primary:hover {
+		background-color: #0056b3;
+		border-color: #004085;
+	}
+
+	.btn-secondary:hover {
+		background-color: #6c757d;
+		border-color: #5a6268;
+	}
+
+	hr {
+		border-color: #ddd;
+	}
