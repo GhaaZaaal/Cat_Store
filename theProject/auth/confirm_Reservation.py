@@ -36,6 +36,7 @@ def confirm_Reservation(cat_id):
                 title="Cat Store - Confirm Reservation",
                 cat=cat,
                 gallery=True,
+                custom_Css="confirm_reservation",
             )
         elif current_user.reserved_cat:
             reserved_cat = Cat.query.get_or_404(current_user.reserved_cat)
@@ -56,6 +57,7 @@ def confirm_Reservation(cat_id):
                         cat=cat,
                         confirmed=True,
                         remaining_time=remaining_time,
+                        custom_Css="confirm_reservation",
                     )
                 else:
                     current_user.reserved_cat = None
@@ -86,6 +88,7 @@ def confirm_Reservation(cat_id):
                             remaining_time=False,
                             reserve_again=True,
                             gallery=True,
+                            custom_Css="confirm_reservation",
                         )
                 else:
                     current_user.reserved_cat = None
@@ -103,6 +106,7 @@ def confirm_Reservation(cat_id):
                         cat=reserved_cat,
                         reserve_again=True,
                         remaining_time=False,
+                        custom_Css="confirm_reservation",
                     )
 
     if not current_user.reserved_cat and not cat.reserved_by:
@@ -111,6 +115,7 @@ def confirm_Reservation(cat_id):
             title="Cat Store - Confirm Reservation",
             cat=cat,
             confirmed=False,
+            custom_Css="confirm_reservation",
         )
     elif not current_user.reserved_cat and cat.reserved_by:
         return render_template(
@@ -118,6 +123,7 @@ def confirm_Reservation(cat_id):
             title="Cat Store - Confirm Reservation",
             cat=cat,
             confirmed=False,
+            custom_Css="confirm_reservation",
         )
     elif current_user.reserved_cat:
         reserved_cat = Cat.query.get_or_404(current_user.reserved_cat)
@@ -132,6 +138,7 @@ def confirm_Reservation(cat_id):
                         cat=cat,
                         confirmed=True,
                         remaining_time=remaining_time,
+                        custom_Css="confirm_reservation",
                     )
                 else:
                     return render_template(
@@ -139,6 +146,7 @@ def confirm_Reservation(cat_id):
                         title="Cat Store - Confirm Reservation",
                         cat=cat,
                         confirmed=False,
+                        custom_Css="confirm_reservation",
                     )
             else:
                 if current_user.reserved_cat == cat.id:
@@ -157,6 +165,7 @@ def confirm_Reservation(cat_id):
                         reserve_again=True,
                         gallery=True,
                         remaining_time=False,
+                        custom_Css="confirm_reservation",
                     )
                 else:
                     return render_template(
@@ -166,6 +175,7 @@ def confirm_Reservation(cat_id):
                         confirmed=False,
                         gallery=False,
                         remaining_time=False,
+                        custom_Css="confirm_reservation",
                     )
         elif not cat.reserved_by:
             if remaining_time.total_seconds() > 0:
@@ -174,6 +184,7 @@ def confirm_Reservation(cat_id):
                     title="Cat Store - Confirm Reservation",
                     cat=cat,
                     confirmed=False,
+                    custom_Css="confirm_reservation",
                 )
             else:
                 current_user.reserved_cat = None
@@ -189,4 +200,5 @@ def confirm_Reservation(cat_id):
                     title="Cat Store - Confirm Reservation",
                     cat=cat,
                     confirmed=False,
+                    custom_Css="confirm_reservation",
                 )

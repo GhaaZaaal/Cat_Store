@@ -52,15 +52,16 @@
 		</div>
 
 		<!-- Filter Button -->
-		<button type="submit" class="btn btn-primary btn-block mt-3">
-			Filter
-		</button>
+		<button type="submit" class="btn btn-primary mt-4">Filter</button>
 	</form>
 
 	<!-- Cat Gallery -->
 	<div class="cat-gallery mt-4">
 		{% for cat in cats %}
-		<a href="{{ url_for('auth.confirm_Reservation', cat_id=cat.id) }}">
+		<a
+			href="{{ url_for('auth.confirm_Reservation', cat_id=cat.id) }}"
+			class="cat-card-link"
+		>
 			<div class="cat-item">
 				<img
 					class="cat-image"
@@ -81,6 +82,7 @@
 					<p>
 						<span class="info-label">Gender:</span> {{ cat.gender }}
 					</p>
+					<p class="click-to-reserve">Click to Reserve</p>
 				</div>
 			</div>
 		</a>
@@ -89,8 +91,9 @@
 
 	<!-- Pagination Controls -->
 	<div class="pagination-controls">
+		<!-- Previous Page -->
 		<a
-			href="{{ url_for('auth.gallery', page=pagination.prev_num if pagination.has_prev else 1, **request.args) }}"
+			href="{{ url_for('auth.gallery', color=request.args.get('color'), eye_color=request.args.get('eye_color'), age=request.args.get('age'), gender=request.args.get('gender'), page=pagination.prev_num if pagination.has_prev else 1) }}"
 		>
 			<button
 				class="btn btn-secondary"
@@ -105,8 +108,10 @@
 				Previous
 			</button>
 		</a>
+
+		<!-- Next Page -->
 		<a
-			href="{{ url_for('auth.gallery', page=pagination.next_num if pagination.has_next else pagination.pages, **request.args) }}"
+			href="{{ url_for('auth.gallery', color=request.args.get('color'), eye_color=request.args.get('eye_color'), age=request.args.get('age'), gender=request.args.get('gender'), page=pagination.next_num if pagination.has_next else pagination.pages) }}"
 		>
 			<button
 				class="btn btn-secondary"
@@ -124,128 +129,3 @@
 	</div>
 </div>
 {% endblock %}
-
-<!-- Custom CSS for gallery styling -->
-<style>
-	.pagination-controls {
-		display: flex;
-		justify-content: center;
-		margin-top: 20px;
-	}
-
-	.btn-secondary {
-		border-radius: 8px;
-		padding: 10px 20px;
-		font-size: 1rem;
-		transition: background-color 0.3s, border-color 0.3s;
-	}
-
-	.btn-secondary:hover {
-		background-color: #6c757d;
-		border-color: #5a6268;
-	}
-
-	a:hover {
-		text-decoration: solid;
-	}
-	.gallery-container {
-		padding: 20px;
-	}
-
-	.filter-form {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-		gap: 20px;
-		margin-bottom: 40px;
-	}
-
-	.form-group {
-		margin-bottom: 0;
-	}
-
-	.filter-box {
-		border: 2px solid #e0e0e0;
-		padding: 15px;
-		border-radius: 8px;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-		transition: border-color 0.3s;
-	}
-
-	.filter-box:hover {
-		border-color: #007bff;
-	}
-
-	.font-weight-bold {
-		font-weight: 700;
-	}
-
-	.form-control {
-		border-radius: 8px;
-		padding: 12px;
-		font-size: 1rem;
-		border: 1px solid #ccc;
-		transition: border-color 0.3s;
-	}
-
-	.form-control:focus {
-		border-color: #007bff;
-		box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
-	}
-
-	.cat-gallery {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-		gap: 20px;
-	}
-
-	.cat-item {
-		border: 2px solid #e0e0e0;
-		padding: 15px;
-		border-radius: 8px;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-		transition: border-color 0.3s, transform 0.3s;
-	}
-
-	.cat-item:hover {
-		border-color: #007bff;
-		transform: scale(1.02);
-	}
-
-	.cat-image {
-		width: 100%;
-		height: auto;
-		border-radius: 8px;
-		transition: opacity 0.3s;
-	}
-
-	.cat-item:hover .cat-image {
-		opacity: 0.9;
-	}
-
-	.cat-info {
-		margin-top: 10px;
-	}
-
-	.cat-name {
-		font-size: 1.5rem;
-		font-weight: 700;
-		margin-bottom: 10px;
-	}
-
-	.info-label {
-		font-weight: 700;
-		color: #333;
-	}
-
-	.btn-primary {
-		border-radius: 8px;
-		padding: 12px;
-		font-size: 1.2rem;
-		transition: background-color 0.3s, border-color 0.3s;
-	}
-
-	.btn-primary:hover {
-		background-color: #0056b3;
-		border-color: #004085;
-	}
-</style>
